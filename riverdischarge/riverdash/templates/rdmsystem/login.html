@@ -1,0 +1,57 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+<!--       <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+    </head>
+
+    <body>
+
+      <div class="container">
+        <div class="row" style="padding-top: 250px; padding-left: 340px;">
+          <div class="col s8">
+            <div class="card">
+              <div class="card-image">
+                <img src="http://blue-engineering.nl/wp-content/uploads/2014/10/Slider-blue.png" style="height: 80px;">
+                <span class="card-title">River Discharge Monitoring System</span>
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <form class="col s12" method="POST" action="/login/now/">{% csrf_token %}
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input placeholder="" id="username" type="text" class="validate" name="username">
+                        <label for="username">Username</label>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="password" type="password" class="validate" name="password">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Sign In
+                      <i class="material-icons right">send</i>
+                    </button>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript"></script>  
+    </body>
+  </html>

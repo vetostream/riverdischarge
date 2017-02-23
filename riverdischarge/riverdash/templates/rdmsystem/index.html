@@ -1,0 +1,311 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <title>River Discharge Monitoring System</title>
+
+  <body>
+
+
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Dashboard</a>
+      </div>
+    </nav>
+
+    <div class="row">
+
+      <div class="col s3">
+        <ul id="slide-out" class="side-nav fixed">
+          <li>
+            <div class="userView">
+              <h5>River Discharge Monitoring System</h5>
+            </div>
+          </li>
+          <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
+          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Data Gathered and Analysis</a></li>
+          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Reports</a></li>
+        </ul>
+        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+
+      <div class="col s9 main-wrapper" id="dashboard">
+
+        <div class="col s5">
+          <div class="card horizontal hoverable">
+            <div class="card-image">
+              <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/358751-200.png">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content device-detail">
+                <div class="per-det"><p><b>Device ID</b></p><i>RDM1111</i></div>
+                <div class="per-det"><p><b>Device Latitude</b></p><i>127.01</i></div>
+                <div class="per-det"><p><b>Device Longitude</b></p><i>700.2</i></div>
+                <div class="per-det"><p><b>Device Battery</b></p><i id="device-batt">Initializing...</i></div>
+                <div class="per-det"><p><b>Device Status</b></p><i id="device-stat">Initializing...</i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s7">
+          <div class="card horizontal hoverable">
+            <div class="card-stacked">
+              <div class="card-content device-reading device-reading-block">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12">
+          <div class="card horizontal hoverable">
+            <div class="card-stacked">
+              <div class="card-content reading-graph" id="dashboard-plot">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col s9 main-wrapper" id="reports-page">
+        
+        <div class="row">
+          <div class="col s6">
+            <select class="browser-default" name="quarter" id="quarter-select">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="1">First Quarter</option>
+              <option value="2">Second Quarter</option>
+              <option value="3">Third Quarter</option>
+              <option value="4">Fourth Quarter</option>
+            </select>                                    
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col s12">
+
+
+
+          </div>          
+        </div>
+
+        <div class="col s12">
+          <div class="card">
+            <div class="card-image">
+              <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDw8PDw8NDw8PDw8PDw8PDw8NDw8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NFQ0NFSsZFRktKy0tKystKy0tLS0rLS0tLSsrLS0tLS0tLS0tKzctKy0tNystKy0tLS0tLSstLS0rLf/AABEIAMIBAwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBgX/xAAXEAEBAQEAAAAAAAAAAAAAAAAAAREC/8QAGwEBAQEBAQADAAAAAAAAAAAAAQIABQQDBgf/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APkcukCHH1Gv0aHDgQ4iqLl0gQ4iscOBDiKDkKDCiaKUODCiailDgQ4iopQ4EOJqKUKDCiailCiRYmopQhhJqVipFSlVFQCUVAVUYMqjqtgXWHWbGx4Tk4EOO7XXOOkCHEUnDgQ+UVihwYUSxwoMKJqacKDCiKinCgwomopQ4EOIqKUOBCiainFgwolFKLBUAlFUpJkUBVFWBMKhlZNbWwKyM2M8PDgcnHarrHHTlzjpEUnDgQ4isUOBDiWKFBhQVNOFBhRFRThQYUTUU4UCFEVFKFBiwJpwoEWJTTiioScYYoSSioCqKhlUW1sBMK6MZmRizxUOBy6R2K6hR0jnHTlFJw4EOIrFDgQ4lihwIUTU04UCHBUUoUEoiopQoEKJqacWDFlCacWUViU04sGLAkosFQCUFlAJR1tAJk1tZlZNbWxlZEZnjuTgcnHXrpHDgQ+UUnDgQoiscOBCiWOFAhQVNOFAhRKacKBKUSgtKDFSmnFgFAmnFgxUpKVYKgHrDFAJdHW0AlHW1hha2o2s2LrajaGxWHVLPIQ4MKOrXROHHOHEVjhwIcTWOFAhRLHCgQokU4sGFAmlKUCFE1NKFAhRNTTiwVgTSIIoScWUFSDlWUFCcJdHW1mwl0dbQMLW0dbWbC1tHW1mwmHWZseUhQYUdSvccKBDiaThwIURWOFBhRLFCgwoKxQoEKJTShQIUCSKAUTU0oQQtCSlUYoBLoxRiS1tRgC1dDVDYWqGrrDC1tHW0Ni6yamtjYSJrHDjy8KDCjpV6zhQIcTScKBDiaxwoEKJY4UCFEsUKBKUApQghBJQoC6EnKUCLqQUqiuhJSqKgFq6LaBhKLazFraOtowYWtotrY2FraOs2NisLHDjzUKBDjo16DhQIUTVHDjnCiazpCjnKcTWOFAiypY5SgyrAxRYkUJJRigFpBF0JPWHVSDbR1QMLV0W1gSgugYTaOszYWsLazYutqa2s2MyMS83DjnKcdCvmOFAhRJOFKEKVNJw5XOFE1jhShCiWOUpQi6GOEGqAahKWgFqi2gEQaoBLo6ugYWto6ugYWsOtrNha2jqtgwtTU1GxsLWRNYrqjrMzzkOOcOOhVnCgQomqOFAhRJOFKEKJrHCjnClTWOFAKJYiCEGKKKsxaoyrKBhLoLoBaujraBhtKOswwtXRZmwtbRbWbC1tFtAwm0dZjisiFseehxz5KV76XSFK5wpU0ukWUJSiScLQlKVJOUpXOUpQzpKsCUpUscUJVlSx6oyrKzFqjraGPVDV0Al0NXWYtXQ1dALWHW1mPW0dbWBNo62sxJqamsxaw6xwvgclEZ76l0ixmRTCKMySUJmFKwozJYorMmsUWMwJRYjBijRmYKrMGaKzMyszMGXGYVmZmZmRWZkq1mYBWZmL//Z" style="height: 120px;">
+              <span class="card-title">Kotkot River : Paril Station<br>Summary of Streamflow Measurements</span>
+            </div>
+            <div class="card-content">
+              <table class="bordered">
+                <thead>
+                  <tr>
+                      <th>Month</th>
+                      <th>Day</th>
+                      <th>Discharge <br>m<sup>3</sup>/s</th>
+                      <th>Sensor One</th>
+                      <th>Sensor Two</th>
+                  </tr>
+                </thead>
+
+                <tbody id="data-summary">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>      
+
+      <div class="col s9 main-wrapper" id="data-analysis">
+        <div class="col s5">
+          <label>Date</label>
+          <input type="date" class="datepicker">
+        </div>
+
+        <div class="preloader-wrapper big active" id="loader">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+
+
+<!--           <div class="col s12">
+            <div class="card horizontal hoverable">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <table class="striped responsive-table">
+                    <thead>
+                      <tr>
+                          <th data-field="id">Sensor Alpha Water Level</th>
+                          <th data-field="name">Sensor Beta Water Level</th>
+                          <th data-field="price">Date Received</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="data-reading-body">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col s12">
+              <div class="card">
+                <div class="card-image">
+                  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDw8PDw8NDw8PDw8PDw8PDw8NDw8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NFQ0NFSsZFRktKy0tKystKy0tLS0rLS0tLSsrLS0tLS0tLS0tKzctKy0tNystKy0tLS0tLSstLS0rLf/AABEIAMIBAwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBgX/xAAXEAEBAQEAAAAAAAAAAAAAAAAAAREC/8QAGwEBAQEBAQADAAAAAAAAAAAAAQIABQQDBgf/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APkcukCHH1Gv0aHDgQ4iqLl0gQ4iscOBDiKDkKDCiaKUODCiailDgQ4iopQ4EOJqKUKDCiailCiRYmopQhhJqVipFSlVFQCUVAVUYMqjqtgXWHWbGx4Tk4EOO7XXOOkCHEUnDgQ+UVihwYUSxwoMKJqacKDCiKinCgwomopQ4EOIqKUOBCiainFgwolFKLBUAlFUpJkUBVFWBMKhlZNbWwKyM2M8PDgcnHarrHHTlzjpEUnDgQ4isUOBDiWKFBhQVNOFBhRFRThQYUTUU4UCFEVFKFBiwJpwoEWJTTiioScYYoSSioCqKhlUW1sBMK6MZmRizxUOBy6R2K6hR0jnHTlFJw4EOIrFDgQ4lihwIUTU04UCHBUUoUEoiopQoEKJqacWDFlCacWUViU04sGLAkosFQCUFlAJR1tAJk1tZlZNbWxlZEZnjuTgcnHXrpHDgQ+UUnDgQoiscOBCiWOFAhQVNOFAhRKacKBKUSgtKDFSmnFgFAmnFgxUpKVYKgHrDFAJdHW0AlHW1hha2o2s2LrajaGxWHVLPIQ4MKOrXROHHOHEVjhwIcTWOFAhRLHCgQokU4sGFAmlKUCFE1NKFAhRNTTiwVgTSIIoScWUFSDlWUFCcJdHW1mwl0dbQMLW0dbWbC1tHW1mwmHWZseUhQYUdSvccKBDiaThwIURWOFBhRLFCgwoKxQoEKJTShQIUCSKAUTU0oQQtCSlUYoBLoxRiS1tRgC1dDVDYWqGrrDC1tHW0Ni6yamtjYSJrHDjy8KDCjpV6zhQIcTScKBDiaxwoEKJY4UCFEsUKBKUApQghBJQoC6EnKUCLqQUqiuhJSqKgFq6LaBhKLazFraOtowYWtotrY2FraOs2NisLHDjzUKBDjo16DhQIUTVHDjnCiazpCjnKcTWOFAiypY5SgyrAxRYkUJJRigFpBF0JPWHVSDbR1QMLV0W1gSgugYTaOszYWsLazYutqa2s2MyMS83DjnKcdCvmOFAhRJOFKEKVNJw5XOFE1jhShCiWOUpQi6GOEGqAahKWgFqi2gEQaoBLo6ugYWto6ugYWsOtrNha2jqtgwtTU1GxsLWRNYrqjrMzzkOOcOOhVnCgQomqOFAhRJOFKEKJrHCjnClTWOFAKJYiCEGKKKsxaoyrKBhLoLoBaujraBhtKOswwtXRZmwtbRbWbC1tFtAwm0dZjisiFseehxz5KV76XSFK5wpU0ukWUJSiScLQlKVJOUpXOUpQzpKsCUpUscUJVlSx6oyrKzFqjraGPVDV0Al0NXWYtXQ1dALWHW1mPW0dbWBNo62sxJqamsxaw6xwvgclEZ76l0ixmRTCKMySUJmFKwozJYorMmsUWMwJRYjBijRmYKrMGaKzMyszMGXGYVmZmZmRWZkq1mYBWZmL//Z" style="height: 75px;">
+                  <span class="card-title">Readings</span>
+                </div>
+                <div class="card-content">
+                    <ul class="pagination center-align" id="readings-pagination">
+                    </ul>                 
+                    <table class="responsive-table">
+                      <thead>
+                        <tr>
+                            <th data-field="id">Sensor Alpha Water Level</th>
+                            <th data-field="name">Sensor Beta Water Level</th>
+                            <th data-field="price">Date Received</th>
+                        </tr>
+                      </thead>
+
+                      <tbody id="data-reading-body">                      
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>          
+<!--             <div class="col s12" id="readings-table">
+                    <table class="responsive-table">
+                      <thead>
+                        <tr>
+                            <th data-field="id">Sensor Alpha Water Level</th>
+                            <th data-field="name">Sensor Beta Water Level</th>
+                            <th data-field="price">Date Received</th>
+                        </tr>
+                      </thead>
+
+                      <tbody id="data-reading-body">                      
+                      </tbody>
+                    </table>
+
+                    <ul class="pagination center-align" id="readings-pagination">
+                    </ul>                    
+            </div> -->
+
+<!--             <div class="col s12" id="readings-charts">
+              <div class="col s12 center-align" id="water-reading">
+
+              </div>
+            </div> -->
+                                   
+          </div>         
+      </div>
+
+    </div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{% static 'js/rdmsystem.js' %}"></script>
+    <script type="text/javascript">
+    //device-id/device-token
+    // socket = new WebSocket('ws://' + window.location.host + '/chreading/RDM1111/942939d0244ec04702c2008d994487c81e97e9f56584450ca94c0145ac860064515f118e4749497dcbb534f356d341c778622763d364087e3407a1737735bad6/');
+    socket = new WebSocket('ws://' + window.location.host + '/chreading/RDM4321/!n!t/');
+    var device = "RDM4321";
+
+
+    socket.onmessage = function(e){
+      console.log('onmessage');
+
+        try {
+          var reading_obj = JSON.parse(e.data);
+        }catch(err){
+          var reading_obj = e.data;
+        }
+
+        //1 = reading, 2 = devices, 3 = both
+
+        if (typeof(reading_obj) == 'object'){
+          console.log('object');
+          if(reading_obj.pm == '1'){
+              var d = Date()
+              $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+reading_obj.w1+' <br> Sensor Beta WL: '+reading_obj.w2+'<br>Received:'+d+'</p></blockquote>');
+          }else if(reading_obj.pm == '2'){
+              // console.log(reading_obj.dd);
+              // $( 'tr[data-id="'+reading_obj.devread_device+'"]' ).find("#device-batt").html("<b>"+reading_obj.device_battery+"</b>");
+              // $( 'tr[data-id="'+reading_obj.devread_device+'"]' ).find("#device-stat").html("<b id='online-device'><i>"+reading_obj.device_status.toUpperCase()+"</i></b>");
+              $("#device-batt").html(reading_obj.db);
+              $("#device-stat").html("<b class='online-device'>"+reading_obj.ds.toUpperCase()+"</b>");
+          }else if(reading_obj.pm == '3'){
+              // $(' #reading-list ').append(reading_obj.water_one);
+              // $(' #device-list ').append(reading_obj.device_status);
+          }else if(reading_obj.pm == '4'){
+            console.log("This instance has connected to chreadings channel.");
+          }          
+        }else{
+          console.log(reading_obj);
+          if(reading_obj == 'RDM1111'){
+            console.log("The device was Disconnected.");
+            $("#device-batt").html('---');
+            $("#device-stat").html("<b class='online-device'>OFFLINE</b>");
+          }else if(reading_obj == 'RDM1111c'){
+              $("#device-stat").html("<b class='online-device'>ONLINE</b>");
+          }
+        }
+    }
+
+    socket.onopen = function(){
+        console.log('Server Initiated');
+    }
+
+    socket.onclose = function(){
+    }
+
+    // if(socket.readyState == WebSocket.OPEN){
+    //     // socket.onopen();
+    // }else if(socket.readyState == WebSocket.CLOSED){
+    //   socket.onclose();
+    // }
+
+    // switch(socket.readyState){
+    //   case WebSocket.CONNECTING:
+    //     console.log('Device Connecting');
+    //     break;
+    //   case WebSocket.OPEN:
+    //     console.log('Device Connected');
+    //     break;
+    //   case WebSocket.CLOSING:
+    //     console.log('Device is Disconnecting');
+    //     break;
+    //   case WebSocket.CLOSED:
+    //     console.log('Device is Disconnected');
+    //     break;
+    //   default: 
+    //     console.log('Why is this happening?');
+    // }
+
+    // Initialize collapse button
+    $(".button-collapse").sideNav();
+    // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+    //$('.collapsible').collapsible();
+    </script>
+  </body>
+</html>

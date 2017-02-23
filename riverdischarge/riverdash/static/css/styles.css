@@ -1,0 +1,56 @@
+.side-nav {
+
+
+
+  background: #0F3B5F; /*#3d72b4;*/ /* fallback for old browsers */
+/*  background: -webkit-linear-gradient(to left, #e2e0e0 , #3d72b4);*/ /* Chrome 10-25, Safari 5.1-6 */
+/*  background: linear-gradient(to left, #e2e0e0 , #3d72b4);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+
+}
+
+.side-nav a {
+  color: #fff;
+}
+
+.per-det {
+  padding-bottom: 5px;
+}
+
+.per-det i {
+  color: #64b3f4;
+}
+
+.device-reading {
+  height: 290px !important;
+  overflow-y: scroll;
+}
+
+.online-device {
+  color: green;
+}
+
+.header-wrap {
+  padding-top: 21px;
+}
+
+.nav-wrapper {
+  padding-left: 360px;
+  background:#FF9900; /* fallback for old browsers */
+  color: black !important;
+}
+
+.main-wrapper {
+  padding-top: 35px !important;
+}
+
+@media only screen and (max-width : 992px) {
+  .nav-wrapper {
+    padding-left: 500px;
+  }
+}
+
+#data-analysis, #reports-page {
+  display: none;
+}
+

@@ -25,7 +25,7 @@ SECRET_KEY = ')&y&p%!9$1s!9w7t=s!7wc2b3r%z%jew-$zhzwge)0ud_&!c##'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'riverdash.apps.RiverdashConfig',
+    'channels',
+    'wkhtmltopdf',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +77,21 @@ WSGI_APPLICATION = 'riverdischarge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rdmdb',
+        'USER': 'doctorstrange',
+        'PASSWORD': '!d0ct0rstr4ng3!',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
@@ -111,10 +126,11 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,"static")

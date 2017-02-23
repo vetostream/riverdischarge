@@ -4,7 +4,7 @@
 #Date:      January 27, 2017          #
 #######################################
 
-from rdmsystem.powerregression import PowerRegression
+from riverdash.powerregression import PowerRegression
 
 class RiverDischargeAI:
 

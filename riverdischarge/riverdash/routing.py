@@ -1,5 +1,5 @@
 from channels.routing import route
-from rdmsystem.consumers import reading_connect, reading_message, reading_disconnect
+from riverdash.consumers import reading_connect, reading_message, reading_disconnect
 
 # channel_routing = [
 # 	route('websocket.connect', ws_connect),

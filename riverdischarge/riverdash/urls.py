@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
-from rdmsystem import views
+from riverdash import views
 
 urlpatterns = [
 	url(r'^devices/$',views.device_list),

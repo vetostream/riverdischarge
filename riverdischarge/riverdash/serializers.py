@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rdmsystem.models import Device, DeviceReading
+from riverdash.models import Device, DeviceReading
 
 class DeviceSerializer(serializers.ModelSerializer):
 	class Meta:

@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from rdmsystem.models import Device, DeviceReading
-from rdmsystem.serializers import DeviceSerializer, ReadingSerializer
+from riverdash.models import Device, DeviceReading
+from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
-from rdmsystem.riverai import RiverDischargeAI
+from riverdash.riverai import RiverDischargeAI
 from django.utils import timezone
 from datetime import datetime, date
 from django.template.loader import get_template

@@ -91,8 +91,8 @@ DATABASES = {
         'NAME': 'rdmdb',
         'USER': 'doctorstrange',
         'PASSWORD': '!d0ct0rstr4ng3!',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'HOST': '',
+        'PORT': ''
     }
 }
 

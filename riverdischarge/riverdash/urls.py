@@ -14,6 +14,7 @@ urlpatterns = [
 	url(r'^index/$',views.index),
 	url(r'^login/$',views.login_user),
 	url(r'^login/now/$',views.login_now),
+	url(r'^$',views.index),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

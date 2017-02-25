@@ -43,10 +43,31 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
+# CHANNEL_LAYERS = {
+#     "default":{
+#         "BACKEND": "asgiref.inmemory.ChannelLayer",
+#         "ROUTING": "riverdischarge.routing.channel_routing",
+#     },
+# }
+
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 9090)],
+#         },
+#         "ROUTING": "riverdischarge.routing.channel_routing",
+#     },
+# }
+
 CHANNEL_LAYERS = {
-    "default":{
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
+    "default": {
+        "BACKEND": "asgi_ipc.IPCChannelLayer",
         "ROUTING": "riverdischarge.routing.channel_routing",
+        "CONFIG": {
+            "prefix": "www.rivermonitor.tk",
+        },
     },
 }
 

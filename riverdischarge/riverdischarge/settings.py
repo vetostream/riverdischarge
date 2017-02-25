@@ -43,23 +43,23 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
-# CHANNEL_LAYERS = {
-#     "default":{
-#         "BACKEND": "asgiref.inmemory.ChannelLayer",
-#         "ROUTING": "riverdischarge.routing.channel_routing",
-#     },
-# }
-
-
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+    "default":{
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
         "ROUTING": "riverdischarge.routing.channel_routing",
     },
 }
+
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#         "ROUTING": "riverdischarge.routing.channel_routing",
+#     },
+# }
 
 # CHANNEL_LAYERS = {
 #     "default": {
@@ -161,5 +161,5 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR,"static/")
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,"static")

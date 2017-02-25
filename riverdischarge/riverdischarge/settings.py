@@ -43,6 +43,13 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
+CHANNEL_LAYERS = {
+    "default":{
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "riverdischarge.routing.channel_routing",
+    },
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -43,20 +43,23 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
-# CHANNEL_LAYERS = {
-#     "default":{
-#         "BACKEND": "asgiref.inmemory.ChannelLayer",
-#         "ROUTING": "riverdischarge.routing.channel_routing",
-#     },
-# }
-
-
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
+    "default":{
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
         "ROUTING": "riverdischarge.routing.channel_routing",
     },
 }
+
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 9090)],
+#         },
+#         "ROUTING": "riverdischarge.routing.channel_routing",
+#     },
+# }
 
 # CHANNEL_LAYERS = {
 #     "default": {

@@ -54,6 +54,9 @@ INSTALLED_APPS = [
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
         "ROUTING": "riverdischarge.routing.channel_routing",
     },
 }

@@ -43,12 +43,12 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
-CHANNEL_LAYERS = {
-    "default":{
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "riverdischarge.routing.channel_routing",
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default":{
+#         "BACKEND": "asgiref.inmemory.ChannelLayer",
+#         "ROUTING": "riverdischarge.routing.channel_routing",
+#     },
+# }
 
 
 # CHANNEL_LAYERS = {
@@ -61,15 +61,15 @@ CHANNEL_LAYERS = {
 #     },
 # }
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "asgi_ipc.IPCChannelLayer",
-#         "ROUTING": "riverdischarge.routing.channel_routing",
-#         "CONFIG": {
-#             "prefix": "www.rivermonitor.tk",
-#         },
-#     },
-# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_ipc.IPCChannelLayer",
+        "ROUTING": "riverdischarge.routing.channel_routing",
+        "CONFIG": {
+            "prefix": "www.rivermonitor.tk",
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

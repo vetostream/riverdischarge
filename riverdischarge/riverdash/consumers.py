@@ -58,7 +58,7 @@ def reading_message(message):
 			'text':message.content['text'],
 		})
 
-	print message.content['text']
+	print "SMS FORMAT: {0}, JSON OBJ: {1}".format(message.content['text'],reading_obj)
 
 
 @channel_session

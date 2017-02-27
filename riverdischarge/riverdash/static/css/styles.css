@@ -97,3 +97,7 @@ a.button-collapse {
     z-index: 2;
 }
 
+#error-tag-regression {
+  color: #ee6e73;
+}
+

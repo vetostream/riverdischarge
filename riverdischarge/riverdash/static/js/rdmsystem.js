@@ -180,7 +180,7 @@ function getSummaryDischarge($quarter){
 		// });
 
 		// console.log(cnt);
-		// createPagination(cnt,5);
+		// createPagination(cnt,5);	
 	}).fail(function(xhr, status, errThrown){
 		console.log("Something went wrong.");
 		console.log("Error: " + errThrown);
@@ -188,6 +188,57 @@ function getSummaryDischarge($quarter){
 		console.log(xhr);
 	}).always(function(xhr, status){
 		console.log("The request is complete!");
+	});	
+}
+
+function process_regression($data_points){
+	$.ajax({
+		url:'/regression/calculate',
+		data:$data_points,
+		type:'GET',
+		dataType:'json',
+	}).done(function(response){
+		if(response.err == '0'){
+			$("#quote-regression").html("<blockquote><h5>The calculated values from your given data.</h5><br><h6><b>Power Regression Equation: y=\
+				"+response.a+"(h)<sup>"+response.b+"</sup></b><br><b>a: "+response.a+"</b><br><b>b: "+response.b+"</b>\
+				<br><b>r: "+response.r+"</b><br><b>r<sup>2</sup>: "+response.r2+"</b></h6></blockquote>");
+			var $arr_date_chart = [['River Level','River Discharge']]
+			var len_arr = response.data_plot.length;
+			var count;
+			for(count = 0; count < len_arr; count++){
+				$arr_date_chart.push(response.data_plot[count]);
+			}
+
+			console.log($arr_date_chart);
+
+			google.charts.load('current', {'packages':['corechart']});
+	        var data = google.visualization.arrayToDataTable($arr_date_chart);
+
+	        var options = {
+	          title: 'River Level (h) vs River Discharge (Q)',
+	          hAxis: {title: 'River Level (h)', minValue: 0, maxValue: response.maxvalh},
+	          vAxis: {title: 'River Discharge (Q)', minValue: 0, maxValue: response.maxvalq},
+	          legend: 'none'
+	        };
+
+	        var chart = new google.visualization.ScatterChart(document.getElementById('scatter_chart_regression'));
+
+	        chart.draw(data, options);
+	        $('#error-tag-regression').html("");
+	        $('#content-regression').show();
+		}else{
+			console.log(response.err);
+			$('#error-tag-regression').html(response.err);
+			$('#content-regression').hide();
+		}
+	}).fail(function(xhr, status, errThrown,response){
+		console.log("Something went wrong.");
+		console.log("Error: " + errThrown);
+		console.log("Status: " + status);
+		console.log(xhr);
+	}).always(function(xhr, status){
+		console.log("The request is complete!");
+		$('#loader-regression').hide();
 	});	
 }
 
@@ -276,8 +327,6 @@ function drawWaterReading($date) {
         vAxis: {
           title: 'Water Level'
         },
-        'width':500,
-        'height':100,
       };
 
       var chart = new google.visualization.LineChart(document.getElementById('water-reading'));
@@ -324,6 +373,8 @@ $( document ).ready(function(){
 	google.charts.load('current', {packages: ['corechart', 'line']});
 	google.charts.setOnLoadCallback(drawBasic);
 	$('#loader').hide();
+	$('#loader-regression').hide();
+	$('#content-regression').hide();
 });
 
 $( document ).on('click',' #dashboard-btn ', function(){
@@ -386,4 +437,11 @@ $( document ).on('change',' #quarter-select ',function(){
 	// queryDischarge();
 	$quarter = $('select[name="quarter"]').val();
 	getSummaryDischarge($quarter);
+});
+
+$( document ).on('submit','form[id="regression-form"]',function(e){
+	e.preventDefault();
+	console.log($(this).serialize());
+	$('#loader-regression').show();
+	process_regression($(this).serialize());
 });

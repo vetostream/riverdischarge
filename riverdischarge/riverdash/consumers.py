@@ -27,11 +27,51 @@ def reading_connect(message):
 	print "Device ID:{0} Joined readings Channel {1}".format(device_trying[2],message.content)
 
 
+# @channel_session
+# def reading_message(message):
+# 	reading_obj = json.loads(message.content['text'])
+
+# 	push_mode = reading_obj['pm']
+
+
+# 	if int(push_mode) in [1,3]:
+# 		try:
+# 			water_level_one = reading_obj['w1']
+# 			water_level_two = reading_obj['w2']
+# 			devread_id = reading_obj['di']
+# 			devread_device = 'RDM1111'
+
+			
+# 			device = Device.objects.get(device_id=devread_device)
+# 			DeviceReading.objects.create(
+# 					devread_depth_sensor_one = water_level_one,
+# 					devread_depth_sensor_two = water_level_two,
+# 					devread_device = device,
+# 					devread_id = devread_id,
+# 				)
+# 			print "Stored Device Reading"
+
+# 		except Exception as e:
+# 			print e
+
+# 	Group('readings').send({
+# 			'text':message.content['text'],
+# 		})
+
+# 	print "SMS FORMAT: {0}, JSON OBJ: {1}".format(message.content['text'],reading_obj)
+
 @channel_session
 def reading_message(message):
 	reading_obj = json.loads(message.content['text'])
 
 	push_mode = reading_obj['pm']
+	sms = reading_obj['sms']
+
+	sms_data_list = []
+	sms_data_list = sms.split(',')
+
+	#validation
+	
 
 
 	if int(push_mode) in [1,3]:
@@ -58,7 +98,7 @@ def reading_message(message):
 			'text':message.content['text'],
 		})
 
-	print "SMS FORMAT: {0}, JSON OBJ: {1}".format(message.content['text'],reading_obj)
+	print "SMS FORMAT: {0}, JSON OBJ: {1}, FORMATTED DATA: {2}".format(message.content['text'],reading_obj,sms_data_list)
 
 
 @channel_session

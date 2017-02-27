@@ -17,6 +17,7 @@ from django.core import serializers
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+import json
 import pdfkit
 import os
 
@@ -212,31 +213,48 @@ def get_regression_working(request):
 	r = None
 	r2 = None
 
+	resp = JsonResponse({})
+
 	if request.method == 'GET':
 		data_q = request.GET.get('data_q')
 		data_h = request.GET.get('data_h')
 
 	if not data_q or not data_h:
 		print "Empty set of data."
+		return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
+			'a':a,'b':b,'r':r,'r2':r2,'err':'Missing values.','maxvalq':100,'maxvalh':100})
 	else:
 		print "Ready to decode string."
 		data_q_points = data_q.split(',')
 		data_h_points = data_h.split(',')
 
 		#parse the data into floating point
-		data_q_points = [float(q) if q != '' else float(0) for q in data_q_points]
-		data_h_points = [float(h) if h != '' else float(0) for h in data_h_points]
+		try:
+			data_q_points = [float(q) if q != '' else float(0) for q in data_q_points]
+			data_h_points = [float(h) if h != '' else float(0) for h in data_h_points]
+		except:
+			return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
+				'a':a,'b':b,'r':r,'r2':r2,'err':'Only Numbers are allowed.','maxvalq':100,'maxvalh':100})
 
 		print "String decoded. Stored into list."
 		if len(data_q_points) != len(data_h_points):
 			print "Data points length not equal."
+			return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
+				'a':a,'b':b,'r':r,'r2':r2,'err':'Data points should be equal','maxvalq':100,'maxvalh':100})
 		else:
 			#start regression
 			print "starting regression."
-			pwreg = PowerRegression(data_q_points,data_h_points)
-			a = pwreg.cons_asubzero_final
-			b = pwreg.cons_asubone_final
-			r = pwreg.r
-			r2 = pow(pwreg.r,2)
-
-	return HttpResponse('Q: {0}, h:{1}, a:{2}, b:{3}, r:{4}, r2:{5}'.format(data_q_points,data_h_points,a,b,r,r2))
+			try:
+				pwreg = PowerRegression(data_q_points,data_h_points)
+				a = pwreg.cons_asubzero_final
+				b = pwreg.cons_asubone_final
+				r = pwreg.r
+				r2 = pow(pwreg.r,2)
+				maxvalq = max(data_q_points) + 5
+				maxvalh = max(data_h_points) + 5
+				data_forchart = [[x,y] for x,y in zip(data_h_points,data_q_points)]
+				return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
+					'a':a,'b':b,'r':r,'r2':r2,'err':'0','maxvalq':maxvalq,'maxvalh':maxvalh,'data_plot':data_forchart})
+			except:
+				return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
+					'a':a,'b':b,'r':r,'r2':r2,'err':'Data points should be equal','maxvalq':100,'maxvalh':100})

@@ -6,6 +6,7 @@ from riverdash.models import Device, DeviceReading
 from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
 from riverdash.riverai import RiverDischargeAI
+from riverdash.powerregression import PowerRegression
 from django.utils import timezone
 from datetime import datetime, date
 from django.template.loader import get_template
@@ -202,3 +203,40 @@ def machine_learning(request):
 	data = serializers.serialize('json', readings)
 
 	return JsonResponse({'readings':data})
+
+def get_regression_working(request):
+	data_q_points = list()
+	data_h_points = list()
+	a = None
+	b = None
+	r = None
+	r2 = None
+
+	if request.method == 'GET':
+		data_q = request.GET.get('data_q')
+		data_h = request.GET.get('data_h')
+
+	if not data_q or not data_h:
+		print "Empty set of data."
+	else:
+		print "Ready to decode string."
+		data_q_points = data_q.split(',')
+		data_h_points = data_h.split(',')
+
+		#parse the data into floating point
+		data_q_points = [float(q) if q != '' else float(0) for q in data_q_points]
+		data_h_points = [float(h) if h != '' else float(0) for h in data_h_points]
+
+		print "String decoded. Stored into list."
+		if len(data_q_points) != len(data_h_points):
+			print "Data points length not equal."
+		else:
+			#start regression
+			print "starting regression."
+			pwreg = PowerRegression(data_q_points,data_h_points)
+			a = pwreg.cons_asubzero_final
+			b = pwreg.cons_asubone_final
+			r = pwreg.r
+			r2 = pow(pwreg.r,2)
+
+	return HttpResponse('Q: {0}, h:{1}, a:{2}, b:{3}, r:{4}, r2:{5}'.format(data_q_points,data_h_points,a,b,r,r2))

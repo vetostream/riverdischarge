@@ -37,6 +37,7 @@
           <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
           <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Data Gathered and Analysis</a></li>
           <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Reports</a></li>
+          <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Regression</a></li>
         </ul>    
     </header>
 
@@ -82,6 +83,34 @@
         </div>
 
       </div>
+
+      <div class="col s12 m12 l12 main-wrapper" id="regression-page">
+        <div class="row">
+            
+          <p class="flow-text">Input data points to calculate regressions.</p>
+          <form class="col s12 m12 l12">
+            <div class="row">
+              <div class="input-field col s12 m12 l12">
+                <i class="material-icons prefix">assignment</i>
+                <input id="icon_prefix" type="text" class="validate">
+                <label for="icon_prefix">Flow Rate (Q)</label>
+              </div>
+              <div class="input-field col s12 m12 l12">
+                <i class="material-icons prefix">assignment</i>
+                <input id="icon_telephone" type="tel" class="validate">
+                <label for="icon_telephone">Adjusted Stage (h)</label>
+              </div>
+              <div class="input-field col s12 m12 l12 right-align">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Calculate
+                  <i class="material-icons right">send</i>
+                </button>                  
+              </div>            
+            </div>
+          </form>
+        </div>      
+      </div>
+
+
 
       <div class="col s12 m12 l12 main-wrapper" id="reports-page">
         

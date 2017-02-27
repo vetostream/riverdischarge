@@ -14,6 +14,7 @@ urlpatterns = [
 	url(r'^index/$',views.index),
 	url(r'^login/$',views.login_user),
 	url(r'^login/now/$',views.login_now),
+	url(r'^regression/calculate/$',views.get_regression_working),
 	url(r'^$',views.index),
 ]
 

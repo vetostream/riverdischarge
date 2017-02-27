@@ -61,7 +61,7 @@ nav .nav-wrapper {
   }
 }
 
-#data-analysis, #reports-page {
+#data-analysis, #reports-page, #regression-page{
   display: none;
 }
 

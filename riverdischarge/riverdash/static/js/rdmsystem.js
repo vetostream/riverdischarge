@@ -343,6 +343,11 @@ $( document ).on('click',' #reports-btn ',function(){
 	$( '.page-title' ).text("Reports");
 });
 
+$( document ).on('click',' #regression-btn ',function(){
+	reveal("#regression-page");
+	$( '.page-title' ).text("Power Regression");
+});
+
 $('.datepicker').pickadate({
 	selectMonths: true, // Creates a dropdown to control month
 	selectYears: 15 // Creates a dropdown of 15 years to control year

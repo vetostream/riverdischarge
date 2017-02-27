@@ -329,18 +329,18 @@ $( document ).ready(function(){
 $( document ).on('click',' #dashboard-btn ', function(){
 	console.log("dashboard active");
 	reveal("#dashboard");
-	$( '.brand-logo' ).text("Dashboard");
+	$( '.page-title' ).text("Dashboard");
 });
 
 $( document ).on('click',' #data-analysis-btn ',function(){
 	console.log("devices active");
 	reveal("#data-analysis");
-	$( '.brand-logo' ).text("Data Gathered and Analysis");
+	$( '.page-title' ).text("Data Gathered and Analysis");
 });
 
 $( document ).on('click',' #reports-btn ',function(){
 	reveal("#reports-page");
-	$( '.brand-logo' ).text("Reports");
+	$( '.page-title' ).text("Reports");
 });
 
 $('.datepicker').pickadate({

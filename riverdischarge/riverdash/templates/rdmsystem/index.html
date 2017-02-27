@@ -16,16 +16,18 @@
 
   <body>
 
-
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Dashboard</a>
+    <header>
+      <nav class="top-nav">
+        <div class="container">
+          <div class="nav-wrapper">
+            <a href="#" class="page-title">Dashboard</a>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only full"><i class="material-icons">menu</i></a>
       </div>
-    </nav>
 
-    <div class="row">
-
-      <div class="col s3">
         <ul id="slide-out" class="side-nav fixed">
           <li>
             <div class="userView">
@@ -35,13 +37,16 @@
           <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
           <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Data Gathered and Analysis</a></li>
           <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Reports</a></li>
-        </ul>
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-      </div>
+        </ul>    
+    </header>
 
-      <div class="col s9 main-wrapper" id="dashboard">
+    <main>
+    <div class="container">
 
-        <div class="col s5">
+    <div class="row">
+      <div class="col s12 m12 l12 main-wrapper" id="dashboard">
+
+        <div class="col s12 m12 l5">
           <div class="card horizontal hoverable">
             <div class="card-image">
               <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/358751-200.png">
@@ -57,7 +62,8 @@
             </div>
           </div>
         </div>
-        <div class="col s7">
+
+        <div class="col s12 m12 l7">
           <div class="card horizontal hoverable">
             <div class="card-stacked">
               <div class="card-content device-reading device-reading-block">
@@ -66,7 +72,7 @@
           </div>
         </div>
 
-        <div class="col s12">
+        <div class="col s12 m12 l12">
           <div class="card horizontal hoverable">
             <div class="card-stacked">
               <div class="card-content reading-graph" id="dashboard-plot">
@@ -77,10 +83,10 @@
 
       </div>
 
-      <div class="col s9 main-wrapper" id="reports-page">
+      <div class="col s12 m12 l12 main-wrapper" id="reports-page">
         
         <div class="row">
-          <div class="col s6">
+          <div class="col s12 m12 l4">
             <select class="browser-default" name="quarter" id="quarter-select">
               <option value="" disabled selected>Choose your option</option>
               <option value="1">First Quarter</option>
@@ -92,15 +98,15 @@
         </div>
 
 
-        <div class="row">
+<!--         <div class="row">
           <div class="col s12">
 
 
 
           </div>          
-        </div>
+        </div> -->
 
-        <div class="col s12">
+        <div class="col s12 m12 l12">
           <div class="card">
             <div class="card-image">
               <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDw8PDw8NDw8PDw8PDw8PDw8NDw8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NFQ0NFSsZFRktKy0tKystKy0tLS0rLS0tLSsrLS0tLS0tLS0tKzctKy0tNystKy0tLS0tLSstLS0rLf/AABEIAMIBAwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBgX/xAAXEAEBAQEAAAAAAAAAAAAAAAAAAREC/8QAGwEBAQEBAQADAAAAAAAAAAAAAQIABQQDBgf/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APkcukCHH1Gv0aHDgQ4iqLl0gQ4iscOBDiKDkKDCiaKUODCiailDgQ4iopQ4EOJqKUKDCiailCiRYmopQhhJqVipFSlVFQCUVAVUYMqjqtgXWHWbGx4Tk4EOO7XXOOkCHEUnDgQ+UVihwYUSxwoMKJqacKDCiKinCgwomopQ4EOIqKUOBCiainFgwolFKLBUAlFUpJkUBVFWBMKhlZNbWwKyM2M8PDgcnHarrHHTlzjpEUnDgQ4isUOBDiWKFBhQVNOFBhRFRThQYUTUU4UCFEVFKFBiwJpwoEWJTTiioScYYoSSioCqKhlUW1sBMK6MZmRizxUOBy6R2K6hR0jnHTlFJw4EOIrFDgQ4lihwIUTU04UCHBUUoUEoiopQoEKJqacWDFlCacWUViU04sGLAkosFQCUFlAJR1tAJk1tZlZNbWxlZEZnjuTgcnHXrpHDgQ+UUnDgQoiscOBCiWOFAhQVNOFAhRKacKBKUSgtKDFSmnFgFAmnFgxUpKVYKgHrDFAJdHW0AlHW1hha2o2s2LrajaGxWHVLPIQ4MKOrXROHHOHEVjhwIcTWOFAhRLHCgQokU4sGFAmlKUCFE1NKFAhRNTTiwVgTSIIoScWUFSDlWUFCcJdHW1mwl0dbQMLW0dbWbC1tHW1mwmHWZseUhQYUdSvccKBDiaThwIURWOFBhRLFCgwoKxQoEKJTShQIUCSKAUTU0oQQtCSlUYoBLoxRiS1tRgC1dDVDYWqGrrDC1tHW0Ni6yamtjYSJrHDjy8KDCjpV6zhQIcTScKBDiaxwoEKJY4UCFEsUKBKUApQghBJQoC6EnKUCLqQUqiuhJSqKgFq6LaBhKLazFraOtowYWtotrY2FraOs2NisLHDjzUKBDjo16DhQIUTVHDjnCiazpCjnKcTWOFAiypY5SgyrAxRYkUJJRigFpBF0JPWHVSDbR1QMLV0W1gSgugYTaOszYWsLazYutqa2s2MyMS83DjnKcdCvmOFAhRJOFKEKVNJw5XOFE1jhShCiWOUpQi6GOEGqAahKWgFqi2gEQaoBLo6ugYWto6ugYWsOtrNha2jqtgwtTU1GxsLWRNYrqjrMzzkOOcOOhVnCgQomqOFAhRJOFKEKJrHCjnClTWOFAKJYiCEGKKKsxaoyrKBhLoLoBaujraBhtKOswwtXRZmwtbRbWbC1tFtAwm0dZjisiFseehxz5KV76XSFK5wpU0ukWUJSiScLQlKVJOUpXOUpQzpKsCUpUscUJVlSx6oyrKzFqjraGPVDV0Al0NXWYtXQ1dALWHW1mPW0dbWBNo62sxJqamsxaw6xwvgclEZ76l0ixmRTCKMySUJmFKwozJYorMmsUWMwJRYjBijRmYKrMGaKzMyszMGXGYVmZmZmRWZkq1mYBWZmL//Z" style="height: 120px;">
@@ -127,8 +133,8 @@
 
       </div>      
 
-      <div class="col s9 main-wrapper" id="data-analysis">
-        <div class="col s5">
+      <div class="col s12 m12 l12 main-wrapper" id="data-analysis">
+        <div class="col s5 m12 l12">
           <label>Date</label>
           <input type="date" class="datepicker">
         </div>
@@ -167,7 +173,7 @@
             </div>
           </div> -->
           <div class="row">
-            <div class="col s12">
+            <div class="col s12 m12 l12">
               <div class="card">
                 <div class="card-image">
                   <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDw8PDw8NDw8PDw8PDw8PDw8NDw8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NFQ0NFSsZFRktKy0tKystKy0tLS0rLS0tLSsrLS0tLS0tLS0tKzctKy0tNystKy0tLS0tLSstLS0rLf/AABEIAMIBAwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBgX/xAAXEAEBAQEAAAAAAAAAAAAAAAAAAREC/8QAGwEBAQEBAQADAAAAAAAAAAAAAQIABQQDBgf/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APkcukCHH1Gv0aHDgQ4iqLl0gQ4iscOBDiKDkKDCiaKUODCiailDgQ4iopQ4EOJqKUKDCiailCiRYmopQhhJqVipFSlVFQCUVAVUYMqjqtgXWHWbGx4Tk4EOO7XXOOkCHEUnDgQ+UVihwYUSxwoMKJqacKDCiKinCgwomopQ4EOIqKUOBCiainFgwolFKLBUAlFUpJkUBVFWBMKhlZNbWwKyM2M8PDgcnHarrHHTlzjpEUnDgQ4isUOBDiWKFBhQVNOFBhRFRThQYUTUU4UCFEVFKFBiwJpwoEWJTTiioScYYoSSioCqKhlUW1sBMK6MZmRizxUOBy6R2K6hR0jnHTlFJw4EOIrFDgQ4lihwIUTU04UCHBUUoUEoiopQoEKJqacWDFlCacWUViU04sGLAkosFQCUFlAJR1tAJk1tZlZNbWxlZEZnjuTgcnHXrpHDgQ+UUnDgQoiscOBCiWOFAhQVNOFAhRKacKBKUSgtKDFSmnFgFAmnFgxUpKVYKgHrDFAJdHW0AlHW1hha2o2s2LrajaGxWHVLPIQ4MKOrXROHHOHEVjhwIcTWOFAhRLHCgQokU4sGFAmlKUCFE1NKFAhRNTTiwVgTSIIoScWUFSDlWUFCcJdHW1mwl0dbQMLW0dbWbC1tHW1mwmHWZseUhQYUdSvccKBDiaThwIURWOFBhRLFCgwoKxQoEKJTShQIUCSKAUTU0oQQtCSlUYoBLoxRiS1tRgC1dDVDYWqGrrDC1tHW0Ni6yamtjYSJrHDjy8KDCjpV6zhQIcTScKBDiaxwoEKJY4UCFEsUKBKUApQghBJQoC6EnKUCLqQUqiuhJSqKgFq6LaBhKLazFraOtowYWtotrY2FraOs2NisLHDjzUKBDjo16DhQIUTVHDjnCiazpCjnKcTWOFAiypY5SgyrAxRYkUJJRigFpBF0JPWHVSDbR1QMLV0W1gSgugYTaOszYWsLazYutqa2s2MyMS83DjnKcdCvmOFAhRJOFKEKVNJw5XOFE1jhShCiWOUpQi6GOEGqAahKWgFqi2gEQaoBLo6ugYWto6ugYWsOtrNha2jqtgwtTU1GxsLWRNYrqjrMzzkOOcOOhVnCgQomqOFAhRJOFKEKJrHCjnClTWOFAKJYiCEGKKKsxaoyrKBhLoLoBaujraBhtKOswwtXRZmwtbRbWbC1tFtAwm0dZjisiFseehxz5KV76XSFK5wpU0ukWUJSiScLQlKVJOUpXOUpQzpKsCUpUscUJVlSx6oyrKzFqjraGPVDV0Al0NXWYtXQ1dALWHW1mPW0dbWBNo62sxJqamsxaw6xwvgclEZ76l0ixmRTCKMySUJmFKwozJYorMmsUWMwJRYjBijRmYKrMGaKzMyszMGXGYVmZmZmRWZkq1mYBWZmL//Z" style="height: 75px;">
@@ -219,6 +225,8 @@
       </div>
 
     </div>
+    </div>
+    </main>
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

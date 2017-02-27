@@ -35,9 +35,15 @@
 }
 
 .nav-wrapper {
-  padding-left: 360px;
+  position: relative;
   background:#FF9900; /* fallback for old browsers */
+  height: 100%;
   color: black !important;
+}
+
+nav .nav-wrapper {
+  position: relative;
+  height: 100%;
 }
 
 .main-wrapper {
@@ -46,11 +52,48 @@
 
 @media only screen and (max-width : 992px) {
   .nav-wrapper {
-    padding-left: 500px;
+    width: 100%;
+    text-align: center;
+  }
+
+  header, main{
+    padding-left: 0px !important;
   }
 }
 
 #data-analysis, #reports-page {
   display: none;
+}
+
+.top-nav {
+  height: 122px;
+  background:#FF9900; /* fallback for old browsers */  
+}
+
+nav.top-nav a.page-title {
+    line-height: 122px;
+    font-size: 48px;
+}
+
+header, main{
+  padding-left: 300px;
+}
+
+a.button-collapse.full {
+    line-height: 122px;
+}
+
+a.button-collapse {
+    position: absolute;
+    text-align: center;
+    height: 48px;
+    width: 48px;
+    left: 7.5%;
+    top: 0;
+    float: none;
+    margin-left: 1.5rem;
+    color: #fff;
+    font-size: 36px;
+    z-index: 2;
 }
 

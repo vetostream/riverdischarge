@@ -12,7 +12,7 @@ class Device(models.Model):
 	device_lng = models.DecimalField(max_digits=9, decimal_places=6)
 	device_auth = models.CharField(max_length=128, default='!n!t')
 	device_added = models.DateTimeField(auto_now_add=True)
-	device_battery = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+	device_battery = models.DecimalField(max_digits=11, decimal_places=6, null=True)
 	device_status = models.IntegerField(null=True)
 
 	def __unicode__(self):

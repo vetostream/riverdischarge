@@ -55,8 +55,8 @@
             <div class="card-stacked">
               <div class="card-content device-detail">
                 <div class="per-det"><p><b>Device ID</b></p><i>RDM1111</i></div>
-                <div class="per-det"><p><b>Device Latitude</b></p><i>127.01</i></div>
-                <div class="per-det"><p><b>Device Longitude</b></p><i>700.2</i></div>
+<!--                 <div class="per-det"><p><b>Device Latitude</b></p><i>127.01</i></div>
+                <div class="per-det"><p><b>Device Longitude</b></p><i>700.2</i></div> -->
                 <div class="per-det"><p><b>Device Battery</b></p><i id="device-batt">Initializing...</i></div>
                 <div class="per-det"><p><b>Device Status</b></p><i id="device-stat">Initializing...</i></div>
               </div>
@@ -318,8 +318,13 @@
         if (typeof(reading_obj) == 'object'){
           console.log('object');
           if(reading_obj.pm == '1'){
-              var d = Date()
-              $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+reading_obj.w1+' <br> Sensor Beta WL: '+reading_obj.w2+'<br>Received:'+d+'</p></blockquote>');
+            console.log(reading_obj.sms)
+            var data_sms = reading_obj.sms.split(',');
+            console.log(data_sms);
+            var d = new Date(data_sms[8]+"-"+data_sms[1]+"-"+data_sms[2]+" "+data_sms[3]+":"+data_sms[4]);
+            var tod = Date();
+            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+data_sms[5]+' <br> Sensor Beta WL: '+data_sms[6]+'<br>Read Time: '+d+'<br>Received:'+tod+'</p></blockquote>');
+            $("#device-batt").html(parseFloat(data_sms[7])+"%");
           }else if(reading_obj.pm == '2'){
               // console.log(reading_obj.dd);
               // $( 'tr[data-id="'+reading_obj.devread_device+'"]' ).find("#device-batt").html("<b>"+reading_obj.device_battery+"</b>");

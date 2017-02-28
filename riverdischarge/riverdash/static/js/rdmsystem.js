@@ -37,6 +37,25 @@ var Device = {
 			console.log("The request is complete!");
 		});
 	},
+	getDeviceBattStat:function($device_id){
+		$.ajax({
+			url:'/devices/activity',
+			data:{'device_id':$device_id},
+			type:'GET',
+			dataType:'json',
+		}).done(function(response){
+			console.log(response);
+			$("#device-batt").html(response.device_batt);
+            $("#device-stat").html("<b class='online-device'>"+response.device_status.toUpperCase()+"</b>");
+		}).fail(function(xhr, status, errThrown){
+			console.log("Something went wrong. Cant give device detail.");
+			console.log("Error: " + errThrown);
+			console.log("Status: " + status);
+			console.log(xhr);
+		}).always(function(xhr, status){
+			console.log("The request is complete!");
+		});
+	},
 	postDevice:function(){
 		$.ajax({
 			url:'/devices/'+$pk,
@@ -368,6 +387,7 @@ $( document ).ready(function(){
 	var deviceObj = Device;
 	var readingObj = Reading;
 	deviceObj.getQuerySet();
+	deviceObj.getDeviceBattStat('RDM1111');
 	readingObj.getQuerySet();
 	
 	google.charts.load('current', {packages: ['corechart', 'line']});

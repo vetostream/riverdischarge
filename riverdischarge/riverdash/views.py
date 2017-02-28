@@ -258,3 +258,20 @@ def get_regression_working(request):
 			except:
 				return JsonResponse({'data_q':data_q_points,'data_h':data_h_points,
 					'a':a,'b':b,'r':r,'r2':r2,'err':'Data points should be equal','maxvalq':100,'maxvalh':100})
+
+def get_device_status(request):
+	if request.method == 'GET':
+		device_id = request.GET.get('device_id');
+
+	device_batt = '---'
+	device_status = '---'
+
+	if not device_id:
+		print "Device id not found."
+	else:
+		device = Device.objects.get(device_id=device_id)
+		device_batt = "{0:,.2f}%".format(device.device_battery) or '---'
+		device_status = "ONLINE" if device.device_status == 1 else "OFFLINE"
+
+	return JsonResponse({'device_batt':device_batt,'device_status':device_status})
+

@@ -26,7 +26,7 @@ class DeviceSerializer(serializers.ModelSerializer):
 class ReadingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = DeviceReading
-		fields = ('devread_id','devread_depth_sensor_one','devread_depth_sensor_two','devread_device','devread_received')
+		fields = ('devread_id','devread_depth_sensor_one','devread_depth_sensor_two','devread_device','devread_received','devread_time')
 
 	# def create(self, validated_data):
 	# 	return DeviceReading.objects.create(**validated_data)

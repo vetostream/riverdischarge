@@ -85,7 +85,14 @@ var Reading = {
 			dataType:'json',
 		}).done(function(response){
 			$.each(response, function(key, value){
-				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' <br> Sensor Beta WL: '+value.devread_depth_sensor_two+'<br>Received: '+value.devread_received+'</p></blockquote>');
+				var devread_time = new Date(value.devread_time);
+				var devread_received = new Date(value.devread_received);
+				var devread_time_stringify = devread_time.getFullYear() + "-" + devread_time.getMonth() + "-" + devread_time.getDate() + "  T" + devread_time.getHours() + ":" + devread_time.getMinutes();
+				var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
+
+				console.log("devread_time: " + devread_time_stringify + ", devread_received: "+devread_received_stringify);
+				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' <br> Sensor Beta WL: '+value.devread_depth_sensor_two+'\
+					<br>Read Time: '+devread_time_stringify+'<br>Received: '+devread_received_stringify+'</p></blockquote>');
 			});
 		}).fail(function(xhr, status, errThrown){
 			console.log("Something went wrong.");
@@ -382,20 +389,6 @@ function createPagination($numberOfData,$limitEntry){
 	$( "#readings-pagination" ).append($number_of_pages_context);
 }
 
-$( document ).ready(function(){
-	console.log('document is ready...');
-	var deviceObj = Device;
-	var readingObj = Reading;
-	deviceObj.getQuerySet();
-	deviceObj.getDeviceBattStat('RDM1111');
-	readingObj.getQuerySet();
-	
-	google.charts.load('current', {packages: ['corechart', 'line']});
-	google.charts.setOnLoadCallback(drawBasic);
-	$('#loader').hide();
-	$('#loader-regression').hide();
-	$('#content-regression').hide();
-});
 
 $( document ).on('click',' #dashboard-btn ', function(){
 	console.log("dashboard active");
@@ -459,9 +452,26 @@ $( document ).on('change',' #quarter-select ',function(){
 	getSummaryDischarge($quarter);
 });
 
+
 $( document ).on('submit','form[id="regression-form"]',function(e){
 	e.preventDefault();
 	console.log($(this).serialize());
 	$('#loader-regression').show();
 	process_regression($(this).serialize());
+});
+
+
+$( document ).ready(function(){
+	console.log('document is ready...');
+	var deviceObj = Device;
+	var readingObj = Reading;
+	deviceObj.getQuerySet();
+	deviceObj.getDeviceBattStat('RDM1111');
+	readingObj.getQuerySet();
+	
+	google.charts.load('current', {packages: ['corechart', 'line']});
+	google.charts.setOnLoadCallback(drawBasic);
+	$('#loader').hide();
+	$('#loader-regression').hide();
+	$('#content-regression').hide();
 });

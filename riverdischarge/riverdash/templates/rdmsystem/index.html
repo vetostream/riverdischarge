@@ -321,9 +321,11 @@
             console.log(reading_obj.sms)
             var data_sms = reading_obj.sms.split(',');
             console.log(data_sms);
+            var devread_time_stringify = data_sms[8]+"-"+data_sms[1]+"-"+data_sms[2]+"  T"+data_sms[3]+":"+data_sms[4];
             var d = new Date(data_sms[8]+"-"+data_sms[1]+"-"+data_sms[2]+" "+data_sms[3]+":"+data_sms[4]);
-            var tod = Date();
-            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+data_sms[5]+' <br> Sensor Beta WL: '+data_sms[6]+'<br>Read Time: '+d+'<br>Received:'+tod+'</p></blockquote>');
+            var devread_received = new Date();
+            var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
+            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+data_sms[5]+' <br> Sensor Beta WL: '+data_sms[6]+'<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received_stringify+'</p></blockquote>');
             $("#device-batt").html(parseFloat(data_sms[7])+"%");
           }else if(reading_obj.pm == '2'){
               // console.log(reading_obj.dd);
@@ -355,29 +357,6 @@
 
     socket.onclose = function(){
     }
-
-    // if(socket.readyState == WebSocket.OPEN){
-    //     // socket.onopen();
-    // }else if(socket.readyState == WebSocket.CLOSED){
-    //   socket.onclose();
-    // }
-
-    // switch(socket.readyState){
-    //   case WebSocket.CONNECTING:
-    //     console.log('Device Connecting');
-    //     break;
-    //   case WebSocket.OPEN:
-    //     console.log('Device Connected');
-    //     break;
-    //   case WebSocket.CLOSING:
-    //     console.log('Device is Disconnecting');
-    //     break;
-    //   case WebSocket.CLOSED:
-    //     console.log('Device is Disconnected');
-    //     break;
-    //   default: 
-    //     console.log('Why is this happening?');
-    // }
 
     // Initialize collapse button
     $(".button-collapse").sideNav();

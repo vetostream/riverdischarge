@@ -189,8 +189,8 @@ def readings_wpagination(request):
 
 def stream_to_pdf(request):
 	# path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
-	# path_wkthmltopdf = '/usr/local/bin/xvfb.sh'
-	path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
+	path_wkthmltopdf = '/usr/local/bin/xvfb.sh'
+	# path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
 	
 	config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
 

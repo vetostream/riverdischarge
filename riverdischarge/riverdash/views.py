@@ -188,7 +188,9 @@ def readings_wpagination(request):
 # 	return response  # returns the response.
 
 def stream_to_pdf(request):
-	path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
+	# path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
+	path_wkthmltopdf = r'/home/genesis/rdmsystem/env/lib/python2.7/site-packages'
+
 	config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
 
 	projectUrl = "http://{0}/reports/stream/raw/?quarter={1}&year={2}".format(request.get_host(),request.GET.get('quarter'),request.GET.get('year'))

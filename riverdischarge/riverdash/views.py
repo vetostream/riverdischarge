@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from riverdash.models import Device, DeviceReading
+from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants
 from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
 from riverdash.riverai import RiverDischargeAI
@@ -121,18 +121,27 @@ def login_now(request):
 		return redirect('/login')
 
 
-def daily_report(request, template_dir='rdmsystem/daily_report.html'):
+# def daily_report(request, template_dir='rdmsystem/daily_report.html'):
+# 	if request.method == 'GET':
+# 		dt = request.GET.get('dt','')
+
+# 		if dt == '':
+# 			dt = timezone.now()
+# 		else:
+# 			dt = datetime.strptime(dt,'%d %B, %Y').date()
+
+# 		readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)
+
+# 		context = {'readings':readings,'dt':dt}
+
+# 		return render(request, template_dir, context)
+
+def stream_report(request, template_dir='rdmsystem/streamflow.html'):
 	if request.method == 'GET':
-		dt = request.GET.get('dt','')
+		quarter = request.GET.get('quarter')
+		year = request.GET.get('year');
 
-		if dt == '':
-			dt = timezone.now()
-		else:
-			dt = datetime.strptime(dt,'%d %B, %Y').date()
-
-		readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)
-
-		context = {'readings':readings,'dt':dt}
+		context = {'quarter':quarter,'year':year}
 
 		return render(request, template_dir, context)
 
@@ -161,12 +170,29 @@ def readings_wpagination(request):
 
 
 
-def html_to_pdf(request):
+# def html_to_pdf(request):
+# 	path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
+# 	config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
+
+# 	projectUrl = "http://{0}/readings/reports/daily".format(request.get_host())
+# 	pdf = pdfkit.from_url(projectUrl, False, configuration=config, options={'javascript-delay':9000})	
+
+# 	# pdf
+# 	# response = HttpResponse(pdf,content_type='application/pdf')
+# 	# response['Content-Disposition'] = 'attachment; filename="ourcodeworld.pdf"'
+
+# 	# return response
+# 	response = HttpResponse(pdf, content_type='application/pdf')
+# 	# response['Content-Disposition'] = 'attachment; filename="outcode.pdf"'
+
+# 	return response  # returns the response.
+
+def stream_to_pdf(request):
 	path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
 	config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
 
-	projectUrl = "http://{0}/readings/reports/daily".format(request.get_host())
-	pdf = pdfkit.from_url(projectUrl, False, configuration=config, options={'javascript-delay':9000})	
+	projectUrl = "http://{0}/reports/stream/raw/?quarter={1}&year={2}".format(request.get_host(),request.GET.get('quarter'),request.GET.get('year'))
+	pdf = pdfkit.from_url(projectUrl, False, configuration=config,options={'javascript-delay':9000})
 
 	# pdf
 	# response = HttpResponse(pdf,content_type='application/pdf')
@@ -176,7 +202,7 @@ def html_to_pdf(request):
 	response = HttpResponse(pdf, content_type='application/pdf')
 	# response['Content-Disposition'] = 'attachment; filename="outcode.pdf"'
 
-	return response  # returns the response.
+	return response  # returns the response.	
 
 def machine_learning(request):
 	y = [0.050,0.043,5.372,0.555,0.184,0.086,0.006,0.044,0.520,0.101,0.018,0.728,0.294,0.109,0.425,0.397,0.423,0.809,1.479]
@@ -274,4 +300,119 @@ def get_device_status(request):
 		device_status = "ONLINE" if device.device_status == 1 else "OFFLINE"
 
 	return JsonResponse({'device_batt':device_batt,'device_status':device_status})
+
+def monthly_flow_constants(request):
+	if request.method == 'GET':
+		quarter = request.GET.get('quarter');
+		year = request.GET.get('year');
+		adisc = request.GET.get('adisc');
+		astage = request.GET.get('astage');
+		bdisc = request.GET.get('bdisc');
+		bstage = request.GET.get('bstage');
+		cdisc = request.GET.get('cdisc');
+		cstage = request.GET.get('cstage');
+		ddisc = request.GET.get('ddisc');
+		dstage = request.GET.get('dstage');
+		edisc = request.GET.get('edisc');
+		estage = request.GET.get('estage');
+		fdisc = request.GET.get('fdisc');
+		fstage = request.GET.get('fstage');
+		ho = request.GET.get('ho');
+
+	if quarter == '1':
+		month_one_one = MonthlyDischarge.objects.create(discharge=adisc,stage=astage,month=1,part=1,quarter=quarter,year=year)
+		month_one_two = MonthlyDischarge.objects.create(discharge=bdisc,stage=bstage,month=1,part=2,quarter=quarter,year=year)
+
+		month_two_one = MonthlyDischarge.objects.create(discharge=cdisc,stage=cstage,month=2,part=1,quarter=quarter,year=year)
+		month_two_two = MonthlyDischarge.objects.create(discharge=ddisc,stage=dstage,month=2,part=2,quarter=quarter,year=year)
+
+		month_th_one = MonthlyDischarge.objects.create(discharge=edisc,stage=estage,month=3,part=1,quarter=quarter,year=year)
+		month_th_two = MonthlyDischarge.objects.create(discharge=fdisc,stage=fstage,month=3,part=2,quarter=quarter,year=year)
+	elif quarter == '2':
+		month_one_one = MonthlyDischarge.objects.create(discharge=adisc,stage=astage,month=4,part=1,quarter=quarter,year=year)
+		month_one_two = MonthlyDischarge.objects.create(discharge=bdisc,stage=bstage,month=4,part=2,quarter=quarter,year=year)
+
+		month_two_one = MonthlyDischarge.objects.create(discharge=cdisc,stage=cstage,month=5,part=1,quarter=quarter,year=year)
+		month_two_two = MonthlyDischarge.objects.create(discharge=ddisc,stage=dstage,month=5,part=2,quarter=quarter,year=year)
+
+		month_th_one = MonthlyDischarge.objects.create(discharge=edisc,stage=estage,month=6,part=1,quarter=quarter,year=year)
+		month_th_two = MonthlyDischarge.objects.create(discharge=fdisc,stage=fstage,month=6,part=2,quarter=quarter,year=year)
+	elif quarter == '3':
+		month_one_one = MonthlyDischarge.objects.create(discharge=adisc,stage=astage,month=7,part=1,quarter=quarter,year=year)
+		month_one_two = MonthlyDischarge.objects.create(discharge=bdisc,stage=bstage,month=7,part=2,quarter=quarter,year=year)
+
+		month_two_one = MonthlyDischarge.objects.create(discharge=cdisc,stage=cstage,month=8,part=1,quarter=quarter,year=year)
+		month_two_two = MonthlyDischarge.objects.create(discharge=ddisc,stage=dstage,month=8,part=2,quarter=quarter,year=year)
+
+		month_th_one = MonthlyDischarge.objects.create(discharge=edisc,stage=estage,month=9,part=1,quarter=quarter,year=year)
+		month_th_two = MonthlyDischarge.objects.create(discharge=fdisc,stage=fstage,month=9,part=2,quarter=quarter,year=year)
+	elif quarter == '4':
+		month_one_one = MonthlyDischarge.objects.create(discharge=adisc,stage=astage,month=10,part=1,quarter=quarter,year=year)
+		month_one_two = MonthlyDischarge.objects.create(discharge=bdisc,stage=bstage,month=10,part=2,quarter=quarter,year=year)
+
+		month_two_one = MonthlyDischarge.objects.create(discharge=cdisc,stage=cstage,month=11,part=1,quarter=quarter,year=year)
+		month_two_two = MonthlyDischarge.objects.create(discharge=ddisc,stage=dstage,month=11,part=2,quarter=quarter,year=year)
+
+		month_th_one = MonthlyDischarge.objects.create(discharge=edisc,stage=estage,month=12,part=1,quarter=quarter,year=year)
+		month_th_two = MonthlyDischarge.objects.create(discharge=fdisc,stage=fstage,month=12,part=2,quarter=quarter,year=year)
+
+	#calculate regression
+	data_q_points = [float(adisc),float(bdisc),float(cdisc),float(edisc),float(fdisc)]
+	data_h_points = [float(astage),float(bstage),float(cstage),float(estage),float(fstage)]
+	pwreg = PowerRegression(data_q_points,data_h_points)
+	a = pwreg.cons_asubzero_final
+	b = pwreg.cons_asubone_final
+	r = pwreg.r
+	r2 = pow(pwreg.r,2)
+
+	qconstants = QuarterConstants(a=a,b=b,r=r,rtwo=r2,year=year,quarter=quarter,river_profile=ho)
+	qconstants.save()
+
+	return HttpResponse("1")
+	# maxvalq = max(data_q_points) + 5
+	# maxvalh = max(data_h_points) + 5
+	# data_forchart = [[x,y] for x,y in zip(data_h_points,data_q_points)]
+
+
+def get_quarter_constants(request):
+	if request.method == 'GET':
+		quarter = request.GET.get('quarter');
+		year = request.GET.get('year');
+
+	quarter_constants = QuarterConstants.objects.filter(quarter=quarter,year=year)
+	monthly_stream = MonthlyDischarge.objects.filter(quarter=quarter,year=year)
+	a = 0
+	b = 0
+	r = 0
+	r2 = 0
+	count = 0
+	data_points = []
+	data_function = []
+
+	for q in quarter_constants:
+		print "a:{0}".format(q.a)
+		a = q.a or 0
+		b = q.b or 0
+		r = q.r or 0
+		r2 = q.rtwo or 0
+
+	for ms in monthly_stream:
+		data_points += [[round(float(ms.discharge),2),round(float(ms.stage),2)]]
+
+
+	while count < 8:
+		q = (a*pow(count,b))
+		stage = count
+		data_function += [[round(float(q),2),round(float(stage),2)]]
+		count+=1		
+
+
+	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
+	return JsonResponse(json_resp)
+
+
+
+
+
+
 

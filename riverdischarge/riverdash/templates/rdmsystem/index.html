@@ -35,8 +35,8 @@
             </div>
           </li>
           <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
-          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Data Gathered and Analysis</a></li>
-          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Reports</a></li>
+          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Daily Readings</a></li>
+          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Streamflow Measurements</a></li>
           <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li>
         </ul>    
     </header>
@@ -148,9 +148,16 @@
 
 
       <div class="col s12 m12 l12 main-wrapper" id="reports-page">
-        
         <div class="row">
-          <div class="col s12 m12 l4">
+          <div class="col s12 m12 l12">
+            <h5 class="error-tag">Something went wrong. Fill up the form properly.</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 m12 l2">
+            <h6>Streamflow Measurements</h6>
+          </div>        
+          <div class="col s12 m5 l5">
             <select class="browser-default" name="quarter" id="quarter-select">
               <option value="" disabled selected>Choose your option</option>
               <option value="1">First Quarter</option>
@@ -158,8 +165,139 @@
               <option value="3">Third Quarter</option>
               <option value="4">Fourth Quarter</option>
             </select>                                    
+          </div>        
+          <div class="col s12 m5 l5">
+            <input id="last_name" placeholder="Year" type="text" class="validate" name="year">
           </div>
         </div>
+
+        <div class="row" id="quarter-constants">
+          <div class="col s12 m6 l6" style="margin-left: 25px;">
+            <a class="waves-effect waves-light btn" target="_blank" id="print-stream"><i class="material-icons right">print</i>Print PDF</a>
+          </div>
+          <div class="col s12 m12 l12" id="content-regression">
+            <ul class="collapsible popout" data-collapsible="expandable">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">info</i>Constants</div>
+                <div class="collapsible-body"><span id="quarter-regression-constants"></span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">info</i>Tabular Data</div>
+                <div class="collapsible-body"><span id="">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th data-field="id">Month</th>
+                        <th data-field="name">River Discharge</th>
+                        <th data-field="price">River Stage</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="quarter-table-data">
+                    </tbody>
+                  </table> 
+                </span></div>
+              </li>              
+              <li>
+                <div class="collapsible-header"><i class="material-icons">trending_up</i>Rating Curve</div>
+                <div class="collapsible-body"><span id="rating-curve"></span></div>
+              </li>
+            </ul>                     
+          </div>         
+        </div>
+
+        <div class="row" id="quarter-wrapper">        
+          <form class="col s12" id='quarter-datum'>
+<!--             <div class="row">
+              <div class="col s12 m12 l4">
+                <select class="browser-default" name="quarter" id="quarter-select">
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">First Quarter</option>
+                  <option value="2">Second Quarter</option>
+                  <option value="3">Third Quarter</option>
+                  <option value="4">Fourth Quarter</option>
+                </select>                                    
+              </div>
+            </div>  -->    
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="aone">January I</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="adisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="astage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="atwo">January II</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="bdisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="bstage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="bone">February I</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="cdisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="cstage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="btwo">February II</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="ddisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="dstage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="cone">March I</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="edisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="estage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m2 l2"><h6 id="ctwo">March II</h6></div>
+              <div class="input-field col s12 m5 l5">
+                <input placeholder="River Discharge (Q)" id="first_name" type="text" class="validate" name="fdisc">
+                <label for="first_name">River Discharge (Q)</label>
+              </div>
+              <div class="input-field col s12 m5 l5">
+                <input id="last_name" type="text" class="validate" name="fstage">
+                <label for="last_name">River Stage (h)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m12 l12">
+                <input placeholder="Ho" id="first_name" type="text" class="validate" name="ho">
+                <label for="first_name">H<sub>o</sub></label>
+              </div>
+            </div>
+            <div class="input-field col s12 m12 l12 right-align">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Generate
+                <i class="material-icons right">send</i>
+              </button>                  
+            </div>             
+          </form>
+        </div>        
 
 
 <!--         <div class="row">
@@ -171,7 +309,7 @@
         </div> -->
 
         <div class="col s12 m12 l12">
-          <div class="card">
+<!--           <div class="card">
             <div class="card-image">
               <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8PDw8PDw8NDw8PDw8PDw8PDw8NDw8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDQ0NFQ0NFSsZFRktKy0tKystKy0tLS0rLS0tLSsrLS0tLS0tLS0tKzctKy0tNystKy0tLS0tLSstLS0rLf/AABEIAMIBAwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBgX/xAAXEAEBAQEAAAAAAAAAAAAAAAAAAREC/8QAGwEBAQEBAQADAAAAAAAAAAAAAQIABQQDBgf/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APkcukCHH1Gv0aHDgQ4iqLl0gQ4iscOBDiKDkKDCiaKUODCiailDgQ4iopQ4EOJqKUKDCiailCiRYmopQhhJqVipFSlVFQCUVAVUYMqjqtgXWHWbGx4Tk4EOO7XXOOkCHEUnDgQ+UVihwYUSxwoMKJqacKDCiKinCgwomopQ4EOIqKUOBCiainFgwolFKLBUAlFUpJkUBVFWBMKhlZNbWwKyM2M8PDgcnHarrHHTlzjpEUnDgQ4isUOBDiWKFBhQVNOFBhRFRThQYUTUU4UCFEVFKFBiwJpwoEWJTTiioScYYoSSioCqKhlUW1sBMK6MZmRizxUOBy6R2K6hR0jnHTlFJw4EOIrFDgQ4lihwIUTU04UCHBUUoUEoiopQoEKJqacWDFlCacWUViU04sGLAkosFQCUFlAJR1tAJk1tZlZNbWxlZEZnjuTgcnHXrpHDgQ+UUnDgQoiscOBCiWOFAhQVNOFAhRKacKBKUSgtKDFSmnFgFAmnFgxUpKVYKgHrDFAJdHW0AlHW1hha2o2s2LrajaGxWHVLPIQ4MKOrXROHHOHEVjhwIcTWOFAhRLHCgQokU4sGFAmlKUCFE1NKFAhRNTTiwVgTSIIoScWUFSDlWUFCcJdHW1mwl0dbQMLW0dbWbC1tHW1mwmHWZseUhQYUdSvccKBDiaThwIURWOFBhRLFCgwoKxQoEKJTShQIUCSKAUTU0oQQtCSlUYoBLoxRiS1tRgC1dDVDYWqGrrDC1tHW0Ni6yamtjYSJrHDjy8KDCjpV6zhQIcTScKBDiaxwoEKJY4UCFEsUKBKUApQghBJQoC6EnKUCLqQUqiuhJSqKgFq6LaBhKLazFraOtowYWtotrY2FraOs2NisLHDjzUKBDjo16DhQIUTVHDjnCiazpCjnKcTWOFAiypY5SgyrAxRYkUJJRigFpBF0JPWHVSDbR1QMLV0W1gSgugYTaOszYWsLazYutqa2s2MyMS83DjnKcdCvmOFAhRJOFKEKVNJw5XOFE1jhShCiWOUpQi6GOEGqAahKWgFqi2gEQaoBLo6ugYWto6ugYWsOtrNha2jqtgwtTU1GxsLWRNYrqjrMzzkOOcOOhVnCgQomqOFAhRJOFKEKJrHCjnClTWOFAKJYiCEGKKKsxaoyrKBhLoLoBaujraBhtKOswwtXRZmwtbRbWbC1tFtAwm0dZjisiFseehxz5KV76XSFK5wpU0ukWUJSiScLQlKVJOUpXOUpQzpKsCUpUscUJVlSx6oyrKzFqjraGPVDV0Al0NXWYtXQ1dALWHW1mPW0dbWBNo62sxJqamsxaw6xwvgclEZ76l0ixmRTCKMySUJmFKwozJYorMmsUWMwJRYjBijRmYKrMGaKzMyszMGXGYVmZmZmRWZkq1mYBWZmL//Z" style="height: 120px;">
               <span class="card-title">Kotkot River : Paril Station<br>Summary of Streamflow Measurements</span>
@@ -192,7 +330,7 @@
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>      

@@ -389,6 +389,100 @@ function createPagination($numberOfData,$limitEntry){
 	$( "#readings-pagination" ).append($number_of_pages_context);
 }
 
+function quarter_stream($data){
+	$.ajax({
+		url:'/regression/activate',
+		data:$data,
+		type:'GET',
+		dataType:'text',
+	}).done(function(response){
+		console.log(response);
+	}).fail(function(xhr, status, errThrown){
+		console.log("Something went wrong.");
+		console.log("Error: " + errThrown);
+		console.log("Status: " + status);
+		console.log(xhr);
+		$('.error-tag').show();
+	}).always(function(xhr, status){
+		console.log("The request is complete!");
+	});	
+}
+
+function get_quarter_constants($quarter,$year){
+	$.ajax({
+		url:'/regression/constants',
+		data:{'quarter':$quarter,'year':$year},
+		type:'GET',
+		dataType:'json',
+	}).done(function(response){
+		$('.error-tag').hide();
+		if(response.data_points.length === 0){
+			$("#quarter-constants").hide("slow");
+			$("#quarter-wrapper").show("slow");
+			console.log("Date" + response.data_points);			
+		}else{
+			$("#print-stream").attr('href',"/reports/stream/?quarter="+$quarter+"&year="+$year);			
+			$("#quarter-constants").show("slow");
+			$("#quarter-wrapper").hide("slow");
+			console.log('#quarter-wrapper hidden');
+			$.each(response.data_points,function(key,value){
+				if($quarter == 1){
+					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'January':(key <= 3 ? 'February':(key <=5 ? 'March':'')))+'</td>\
+						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+				}else if($quarter == 2){
+					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'April':(key <= 3 ? 'May':(key <=5 ? 'June':'')))+'</td>\
+						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+				}else if($quarter == 3){
+					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'July':(key <= 3 ? 'August':(key <=5 ? 'September':'')))+'</td>\
+						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');				
+				}else{
+					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'October':(key <= 3 ? 'November':(key <=5 ? 'December':'')))+'</td>\
+						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+				}
+			});
+
+		  $("#quarter-regression-constants").html("<blockquote><h5>The calculated values from your given data.</h5><br><h6><b>Power Regression Equation: y=\
+		  	"+response.a+"(h)<sup>"+response.b+"</sup></b><br><b>a: "+response.a+"</b><br><b>b: "+response.b+"</b>\
+		  	<br><b>r: "+response.r+"</b><br><b>r<sup>2</sup>: "+response.r2+"</b></h6></blockquote>");
+		  google.charts.load('current', {packages: ['corechart', 'line']});
+	      var data = new google.visualization.DataTable();
+	      data.addColumn('number', 'h');
+	      data.addColumn('number', 'Q');
+	      console.log(response.data_function);
+	      data.addRows(response.data_function);
+
+	      var options = {
+	        hAxis: {
+	          title: 'River Discharge (Q)',
+	          minValue:0,
+	          maxValue:10
+	        },
+	        vAxis: {
+	          title: 'Adjusted River Stage (h)',
+	          minValue:0,
+	          maxValue:1
+	        },
+	        legend:'none',
+	        title:'Rating Curve Quarter ' + $quarter + ' of '+$year,
+	      };
+
+	      var chart = new google.visualization.LineChart(document.getElementById('rating-curve'));
+
+	      chart.draw(data, options);			
+
+		}
+	}).fail(function(xhr, status, errThrown){
+		console.log("Something went wrong.");
+		console.log("Error: " + errThrown);
+		console.log("Status: " + status);
+		console.log(xhr);
+		$('.error-tag').show();
+	}).always(function(xhr, status){
+		console.log("The request is complete!");
+	});		
+}
+
+
 
 $( document ).on('click',' #dashboard-btn ', function(){
 	console.log("dashboard active");
@@ -399,12 +493,12 @@ $( document ).on('click',' #dashboard-btn ', function(){
 $( document ).on('click',' #data-analysis-btn ',function(){
 	console.log("devices active");
 	reveal("#data-analysis");
-	$( '.page-title' ).text("Data Gathered and Analysis");
+	$( '.page-title' ).text("Daily Readings");
 });
 
 $( document ).on('click',' #reports-btn ',function(){
 	reveal("#reports-page");
-	$( '.page-title' ).text("Reports");
+	$( '.page-title' ).text("Streamflow Measurements");
 });
 
 $( document ).on('click',' #regression-btn ',function(){
@@ -449,7 +543,41 @@ $( document ).on('click','.pager',function(){
 $( document ).on('change',' #quarter-select ',function(){
 	// queryDischarge();
 	$quarter = $('select[name="quarter"]').val();
-	getSummaryDischarge($quarter);
+	$year = $("input[name='year']").val();
+	// console.log($year);
+	get_quarter_constants($quarter,$year);
+	// $("#quarter-wrapper").show("slow");
+
+	if ($quarter == 1){
+		$("#aone").html("January I");
+		$("#atwo").html("January II");
+		$("#bone").html("February I");
+		$("#btwo").html("February II");
+		$("#cone").html("March I");
+		$("#ctwo").html("March II");
+	}else if($quarter == 2){
+		$("#aone").html("April I");
+		$("#atwo").html("April II");
+		$("#bone").html("May I");
+		$("#btwo").html("May II");
+		$("#cone").html("June I");
+		$("#ctwo").html("June II");
+	}else if($quarter == 3){
+		$("#aone").html("July I");
+		$("#atwo").html("July II");
+		$("#bone").html("August I");
+		$("#btwo").html("August II");
+		$("#cone").html("September I");
+		$("#ctwo").html("September II");		
+	}else{
+		$("#aone").html("October I");
+		$("#atwo").html("October II");
+		$("#bone").html("November I");
+		$("#btwo").html("November II");
+		$("#cone").html("December I");
+		$("#ctwo").html("December II");		
+	}
+	// getSummaryDischarge($quarter);
 });
 
 
@@ -459,6 +587,45 @@ $( document ).on('submit','form[id="regression-form"]',function(e){
 	$('#loader-regression').show();
 	process_regression($(this).serialize());
 });
+
+$( document ).on('submit','form[id="quarter-datum"]',function(e){
+	e.preventDefault();
+	var $data = $(this).serialize()+"&quarter="+$('select[name="quarter"]').val()+"&year="+$("input[name='year']").val();
+	console.log($data);
+	quarter_stream($data);
+	$('.error-tag').hide();
+	// $('#loader-regression').show();
+	// process_regression($(this).serialize());
+});
+
+$( document ).on('change','input[name="year"]',function(){
+	$quarter = $('select[name="quarter"]').val();
+	$year = $(this).val();
+	// console.log($year);
+	get_quarter_constants($quarter,$year);
+});
+
+// $( document ).on('click','#print-stream',function(){
+// 	$quarter = $('select[name="quarter"]').val();
+// 	$year = $("input[name='year']").val();
+
+// 	$.ajax({
+// 		url:'/reports/stream',
+// 		data:{'quarter':$quarter,'year':$year},
+// 		type:'GET',
+// 		dataType:'text',
+// 	}).done(function(response){
+// 		console.log(response.url);
+// 	}).fail(function(xhr, status, errThrown){
+// 		console.log("Something went wrong.");
+// 		console.log("Error: " + errThrown);
+// 		console.log("Status: " + status);
+// 		console.log(xhr);
+// 		$('.error-tag').show();
+// 	}).always(function(xhr, status){
+// 		console.log("The request is complete!");
+// 	});	
+// });
 
 
 $( document ).ready(function(){
@@ -474,4 +641,6 @@ $( document ).ready(function(){
 	$('#loader').hide();
 	$('#loader-regression').hide();
 	$('#content-regression').hide();
+	$('#quarter-wrapper').hide();
+	$('#quarter-constants').hide();
 });

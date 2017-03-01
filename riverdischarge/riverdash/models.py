@@ -34,3 +34,30 @@ class DeviceReading(models.Model):
 
 	def __str__(self):
 		return self.devread_id
+
+class MonthlyDischarge(models.Model):
+	discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	stage = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	month = models.IntegerField(default=0, null=False)
+	part = models.IntegerField(default=0, null=False)
+	quarter = models.IntegerField(default=0, null=False)
+	year = models.IntegerField(default=0, null=False)
+
+	def __unicode__(self):
+		return u"%s" % self.id
+
+	def __str__(self):
+		return self.id
+
+class QuarterConstants(models.Model):
+	a = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	b = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	r = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	rtwo = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	year = models.IntegerField(default=0, null=False)
+	quarter = models.IntegerField(default=0, null=False)
+	river_profile = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+
+
+
+

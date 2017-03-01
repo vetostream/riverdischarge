@@ -101,3 +101,8 @@ a.button-collapse {
   color: #ee6e73;
 }
 
+.error-tag {
+  color: #ee6e73;
+  display: none;
+}
+

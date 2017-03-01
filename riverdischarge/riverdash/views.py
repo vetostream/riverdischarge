@@ -189,7 +189,7 @@ def readings_wpagination(request):
 
 def stream_to_pdf(request):
 	# path_wkthmltopdf = r'C:\Python27\wkhtmltopdf\bin\wkhtmltopdf.exe'
-	path_wkthmltopdf = r'/home/genesis/rdmsystem/env/lib/python2.7/site-packages'
+	path_wkthmltopdf = '/home/genesis/rdmsystem/env/lib/python2.7/site-packages'
 
 	config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
 

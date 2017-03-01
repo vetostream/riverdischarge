@@ -390,13 +390,17 @@ function createPagination($numberOfData,$limitEntry){
 }
 
 function quarter_stream($data){
+	$quarter = $('select[name="quarter"]').val();
+	$year = $("input[name='year']").val();	
 	$.ajax({
 		url:'/regression/activate',
 		data:$data,
 		type:'GET',
 		dataType:'text',
 	}).done(function(response){
-		console.log(response);
+		if(response == '1'){
+			get_quarter_constants($quarter,$year);
+		}
 	}).fail(function(xhr, status, errThrown){
 		console.log("Something went wrong.");
 		console.log("Error: " + errThrown);

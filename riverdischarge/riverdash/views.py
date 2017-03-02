@@ -410,6 +410,43 @@ def get_quarter_constants(request):
 	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
 	return JsonResponse(json_resp)
 
+def get_quarter_constants_device(request):
+	if request.method == 'GET':
+		quarter = request.GET.get('quarter');
+		year = request.GET.get('year');
+
+	quarter_constants = QuarterConstants.objects.filter(quarter=quarter,year=year)
+	monthly_stream = MonthlyDischarge.objects.filter(quarter=quarter,year=year)
+	
+	a = 0
+	b = 0
+	r = 0
+	r2 = 0
+	count = 0
+	data_points = []
+	data_function = []
+
+	for q in quarter_constants:
+		print "a:{0}".format(q.a)
+		a = q.a or 0
+		b = q.b or 0
+		r = q.r or 0
+		r2 = q.rtwo or 0
+
+	for ms in monthly_stream:
+		data_points += [[round(float(ms.discharge),2),round(float(ms.stage),2)]]
+
+
+	while count < 8:
+		q = (a*pow(count,b))
+		stage = count
+		data_function += [[round(float(q),2),round(float(stage),2)]]
+		count+=1		
+
+
+	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
+	return JsonResponse(json_resp)	
+
 
 
 

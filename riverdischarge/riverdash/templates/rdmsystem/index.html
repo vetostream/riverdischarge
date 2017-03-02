@@ -38,6 +38,7 @@
           <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Daily Readings</a></li>
           <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Streamflow Measurements</a></li>
           <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li>
+          <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!">River Discharge</a></li>
         </ul>    
     </header>
 
@@ -144,6 +145,65 @@
 
         </div>        
       </div>
+
+      <div class="col s12 m12 l12 main-wrapper" id="river-discharge-machine-page">
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <h5 class="error-tag">Something went wrong. Fill up the form properly.</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 m12 l2">
+            <h6>Machine Generated River Discharge</h6>
+          </div>        
+          <div class="col s12 m5 l5">
+            <select class="browser-default" name="quarter" id="quarter-select">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="1">First Quarter</option>
+              <option value="2">Second Quarter</option>
+              <option value="3">Third Quarter</option>
+              <option value="4">Fourth Quarter</option>
+            </select>                                    
+          </div>        
+          <div class="col s12 m5 l5">
+            <input id="last_name" placeholder="Year" type="text" class="validate" name="year">
+          </div>
+        </div>
+
+        <div class="row" id="quarter-constants">
+          <div class="col s12 m6 l6" style="margin-left: 25px;">
+            <a class="waves-effect waves-light btn" target="_blank" id="print-stream"><i class="material-icons right">print</i>Print PDF</a>
+          </div>
+          <div class="col s12 m12 l12" id="content-regression">
+            <ul class="collapsible popout" data-collapsible="expandable">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">info</i>Constants</div>
+                <div class="collapsible-body"><span id="quarter-regression-constants"></span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">info</i>Tabular Data</div>
+                <div class="collapsible-body"><span id="">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th data-field="id">Month</th>
+                        <th data-field="name">River Discharge</th>
+                        <th data-field="price">River Stage</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="quarter-table-data">
+                    </tbody>
+                  </table> 
+                </span></div>
+              </li>              
+              <li>
+                <div class="collapsible-header"><i class="material-icons">trending_up</i>Rating Curve</div>
+                <div class="collapsible-body"><span id="rating-curve"></span></div>
+              </li>
+            </ul>                     
+          </div>         
+        </div>      
 
 
 

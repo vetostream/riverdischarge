@@ -506,6 +506,11 @@ $( document ).on('click',' #regression-btn ',function(){
 	$( '.page-title' ).text("Power Regression");
 });
 
+$( document ).on('click',' #river-discharge-machine ',function(){
+	reveal("#river-discharge-machine-page");
+	$( '.page-title' ).text("River Discharge");
+});
+
 $('.datepicker').pickadate({
 	selectMonths: true, // Creates a dropdown to control month
 	selectYears: 15 // Creates a dropdown of 15 years to control year

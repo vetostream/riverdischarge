@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants
+from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants, AverageDailyDischarge
 from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
 from riverdash.riverai import RiverDischargeAI
@@ -410,42 +410,36 @@ def get_quarter_constants(request):
 	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
 	return JsonResponse(json_resp)
 
-def get_quarter_constants_device(request):
+def get_avg_discharge(request):
 	if request.method == 'GET':
-		quarter = request.GET.get('quarter');
-		year = request.GET.get('year');
+		month = request.GET.get('river-month')
+		year = request.GET.get('river-year')
 
-	quarter_constants = QuarterConstants.objects.filter(quarter=quarter,year=year)
-	monthly_stream = MonthlyDischarge.objects.filter(quarter=quarter,year=year)
-	
-	a = 0
-	b = 0
-	r = 0
-	r2 = 0
-	count = 0
-	data_points = []
-	data_function = []
+	if int(month) in [1,2,3]:
+		quarter = 1
+	elif int(month) in [4,5,6]:
+		quarter = 2
+	elif int(month) in [7,8,9]:
+		quarter = 3
+	elif int(month) in [10,11,12]:
+		quarter = 4
+	else:
+		print "Unable to determine quarter"
 
-	for q in quarter_constants:
-		print "a:{0}".format(q.a)
-		a = q.a or 0
-		b = q.b or 0
-		r = q.r or 0
-		r2 = q.rtwo or 0
+	#Check if there are constants available for the year and quarter
+	constants = QuarterConstants.objects.filter(quarter=quarter,year=year)
 
-	for ms in monthly_stream:
-		data_points += [[round(float(ms.discharge),2),round(float(ms.stage),2)]]
-
-
-	while count < 8:
-		q = (a*pow(count,b))
-		stage = count
-		data_function += [[round(float(q),2),round(float(stage),2)]]
-		count+=1		
+	if not constants:
+		print "There are no constants yet."
+	else:
+		print "Constants are found. Yay!"
+		AvgReading = AverageDailyDischarge.objects.filter(discharge_date__month=month,discharge_date__year=year)
 
 
-	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
-	return JsonResponse(json_resp)	
+	data = serializers.serialize('json', AvgReading)
+
+	json_resp = {'readings':data}
+	return JsonResponse(json_resp)
 
 
 

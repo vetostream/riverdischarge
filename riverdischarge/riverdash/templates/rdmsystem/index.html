@@ -37,7 +37,7 @@
           <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
           <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Daily Readings</a></li>
           <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Streamflow Measurements</a></li>
-          <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li>
+<!--           <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li> -->
           <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!">River Discharge</a></li>
         </ul>    
     </header>
@@ -149,61 +149,71 @@
       <div class="col s12 m12 l12 main-wrapper" id="river-discharge-machine-page">
         <div class="row">
           <div class="col s12 m12 l12">
-            <h5 class="error-tag">Something went wrong. Fill up the form properly.</h5>
+            <h5 class="error-tag-river-cons">Quarter constants not calculated.</h5>
+            <h5 class="error-tag-river">Nothing to calculate for this month.</h5>
           </div>
         </div>
         <div class="row">
-          <div class="col s12 m12 l2">
-            <h6>Machine Generated River Discharge</h6>
-          </div>        
+   <!--        <div class="col s12 m12 l2">
+            <h6>Averaged Daily Readings</h6>
+          </div> -->        
           <div class="col s12 m5 l5">
-            <select class="browser-default" name="quarter" id="quarter-select">
-              <option value="" disabled selected>Choose your option</option>
-              <option value="1">First Quarter</option>
-              <option value="2">Second Quarter</option>
-              <option value="3">Third Quarter</option>
-              <option value="4">Fourth Quarter</option>
+            <select class="browser-default" name="river-month" id="quarter-select-river">
+              <option value="" disabled selected>Choose a month</option>
+              <option value="1">January</option>
+              <option value="2">Febuary</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option> 
             </select>                                    
-          </div>        
+          </div> 
           <div class="col s12 m5 l5">
-            <input id="last_name" placeholder="Year" type="text" class="validate" name="year">
+            <input id="last_name" placeholder="Year" type="text" class="validate" name="river-year">
           </div>
         </div>
 
-        <div class="row" id="quarter-constants">
-          <div class="col s12 m6 l6" style="margin-left: 25px;">
-            <a class="waves-effect waves-light btn" target="_blank" id="print-stream"><i class="material-icons right">print</i>Print PDF</a>
-          </div>
-          <div class="col s12 m12 l12" id="content-regression">
+        <div class="row" id="quarter-constants-select-river">
+   <!--        <div class="col s12 m6 l6" style="margin-left: 25px;">
+            <a class="waves-effect waves-light btn" target="_blank" id="print-stream-river"><i class="material-icons right">print</i>Print PDF</a>
+          </div> -->
+          <div class="col s12 m12 l12" id="content-regression-river">
             <ul class="collapsible popout" data-collapsible="expandable">
-              <li>
+<!--               <li>
                 <div class="collapsible-header"><i class="material-icons">info</i>Constants</div>
-                <div class="collapsible-body"><span id="quarter-regression-constants"></span></div>
-              </li>
+                <div class="collapsible-body"><span id="quarter-regression-constants-river"></span></div>
+              </li> -->
               <li>
-                <div class="collapsible-header"><i class="material-icons">info</i>Tabular Data</div>
+                <div class="collapsible-header active"><i class="material-icons">info</i>Averaged Daily Measurements Tabular Data</div>
                 <div class="collapsible-body"><span id="">
                   <table>
                     <thead>
                       <tr>
-                        <th data-field="id">Month</th>
-                        <th data-field="name">River Discharge</th>
-                        <th data-field="price">River Stage</th>
+                        <th>Day</th>
+                        <th>River Discharge</th>
+                        <th>River Stage</th>
                       </tr>
                     </thead>
 
-                    <tbody id="quarter-table-data">
+                    <tbody id="quarter-table-data-river">
                     </tbody>
                   </table> 
                 </span></div>
               </li>              
               <li>
-                <div class="collapsible-header"><i class="material-icons">trending_up</i>Rating Curve</div>
-                <div class="collapsible-body"><span id="rating-curve"></span></div>
+<!--                 <div class="collapsible-header"><i class="material-icons">trending_up</i>Rating Curve</div>
+                <div class="collapsible-body"><span id="rating-curve-river"></span></div> -->
               </li>
             </ul>                     
           </div>         
-        </div>      
+        </div>
+      </div>    
 
 
 

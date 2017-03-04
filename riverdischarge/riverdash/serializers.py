@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from riverdash.models import Device, DeviceReading
+from riverdash.models import Device, DeviceReading, AverageDailyDischarge
 
 class DeviceSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -26,7 +26,8 @@ class DeviceSerializer(serializers.ModelSerializer):
 class ReadingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = DeviceReading
-		fields = ('devread_id','devread_depth_sensor_one','devread_depth_sensor_two','devread_device','devread_received','devread_time')
+		fields = ('devread_id','devread_depth_sensor_one','devread_depth_sensor_two','devread_device','devread_received','devread_time','devread_discharge','devread_stage')
+		
 
 	# def create(self, validated_data):
 	# 	return DeviceReading.objects.create(**validated_data)

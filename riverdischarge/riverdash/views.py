@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants
+from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants, AverageDailyDischarge
 from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
 from riverdash.riverai import RiverDischargeAI
@@ -411,6 +411,37 @@ def get_quarter_constants(request):
 
 
 	json_resp = {'a':a,'b':b,'r':r,'r2':r2,'data_points':data_points,'data_function':data_function}
+	return JsonResponse(json_resp)
+
+def get_avg_discharge(request):
+	if request.method == 'GET':
+		month = request.GET.get('river-month')
+		year = request.GET.get('river-year')
+
+	if int(month) in [1,2,3]:
+		quarter = 1
+	elif int(month) in [4,5,6]:
+		quarter = 2
+	elif int(month) in [7,8,9]:
+		quarter = 3
+	elif int(month) in [10,11,12]:
+		quarter = 4
+	else:
+		print "Unable to determine quarter"
+
+	#Check if there are constants available for the year and quarter
+	constants = QuarterConstants.objects.filter(quarter=quarter,year=year)
+
+	if not constants:
+		print "There are no constants yet."
+	else:
+		print "Constants are found. Yay!"
+		AvgReading = AverageDailyDischarge.objects.filter(discharge_date__month=month,discharge_date__year=year)
+
+
+	data = serializers.serialize('json', AvgReading)
+
+	json_resp = {'readings':data}
 	return JsonResponse(json_resp)
 
 

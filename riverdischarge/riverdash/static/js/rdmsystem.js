@@ -487,6 +487,48 @@ function get_quarter_constants($quarter,$year){
 }
 
 
+function get_avg_measurement($month,$year){
+	$.ajax({
+		url:'/readings/daily/avgdischarge',
+		data: {'river-month':$month,'river-year':$year},
+		type:'GET',
+		dataType:'json',
+	}).done(function(response){
+		// if(response.readings === []){
+		// 	alert("test");
+		// }
+		json_p = JSON.parse(response.readings);
+		if (json_p.length == 0){
+			$('.error-tag-river').show();
+			$('.error-tag-river-cons').hide();
+		}else{
+			$('.error-tag-river').hide();
+			$('.error-tag-river-cons').hide();
+			$('#quarter-constants-select-river').show("slow");
+		}
+
+		$.each(response,function(key,value){
+			json_data = JSON.parse(value);
+			$("#quarter-table-data-river").empty();
+			$.each(json_data,function(key,value){
+				$day = new Date(value.fields.discharge_date);
+				$("#quarter-table-data-river").append("<tr><td>"+$day.getDate()+"</td><td>"+value.fields.discharge+"</td><td>"+value.fields.stage+"</td></tr>");
+			});
+		});
+
+
+	}).fail(function(xhr, status, errThrown){
+		console.log("Something went wrong.");
+		console.log("Error: " + errThrown);
+		console.log("Status: " + status);
+		console.log(xhr);
+		$('.error-tag-river-cons').show();
+	}).always(function(xhr, status){
+		console.log("The request is complete!");
+	});
+}
+
+
 
 $( document ).on('click',' #dashboard-btn ', function(){
 	console.log("dashboard active");
@@ -497,7 +539,7 @@ $( document ).on('click',' #dashboard-btn ', function(){
 $( document ).on('click',' #data-analysis-btn ',function(){
 	console.log("devices active");
 	reveal("#data-analysis");
-	$( '.page-title' ).text("Daily Readings");
+	$( '.page-title' ).text("Daily River Stages");
 });
 
 $( document ).on('click',' #reports-btn ',function(){
@@ -508,6 +550,11 @@ $( document ).on('click',' #reports-btn ',function(){
 $( document ).on('click',' #regression-btn ',function(){
 	reveal("#regression-page");
 	$( '.page-title' ).text("Power Regression");
+});
+
+$( document ).on('click',' #river-discharge-machine ',function(){
+	reveal("#river-discharge-machine-page");
+	$( '.page-title' ).text("Averaged Daily Measurements");
 });
 
 $('.datepicker').pickadate({
@@ -609,6 +656,21 @@ $( document ).on('change','input[name="year"]',function(){
 	get_quarter_constants($quarter,$year);
 });
 
+$( document ).on('change','input[name="river-year"]',function(){
+	$month = $('select[name="river-month"]').val();
+	$year = $('input[name="river-year"]').val();
+	// console.log($year);
+
+	get_avg_measurement($month,$year);
+});
+
+$( document ).on('change','select[name="river-month"]',function(){
+	$month = $('select[name="river-month"]').val();
+	$year = $('input[name="river-year"]').val();
+
+	get_avg_measurement($month,$year);
+});
+
 // $( document ).on('click','#print-stream',function(){
 // 	$quarter = $('select[name="quarter"]').val();
 // 	$year = $("input[name='year']").val();
@@ -647,4 +709,5 @@ $( document ).ready(function(){
 	$('#content-regression').hide();
 	$('#quarter-wrapper').hide();
 	$('#quarter-constants').hide();
+	$('#quarter-constants-select-river').hide();
 });

@@ -27,6 +27,9 @@ class DeviceReading(models.Model):
 	devread_depth_sensor_two = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 	devread_time = models.DateTimeField('datetime of reading.',null=True)
 	devread_received = models.DateTimeField(auto_now_add=True)
+	devread_discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+	devread_stage = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+	devread_quarter = models.IntegerField(default=0, null=False)
 	devread_device = models.ForeignKey(Device, to_field='device_id', on_delete=models.CASCADE)
 
 	def __unicode__(self):
@@ -49,6 +52,18 @@ class MonthlyDischarge(models.Model):
 	def __str__(self):
 		return self.id
 
+class AverageDailyDischarge(models.Model):
+	discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	stage = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	discharge_date = models.DateField('date for averaged discharge.')
+
+	def __unicode__(self):
+		return u"%s" % self.id
+
+	def __str__(self):
+		return self.id	
+
+
 class QuarterConstants(models.Model):
 	a = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
 	b = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
@@ -57,6 +72,8 @@ class QuarterConstants(models.Model):
 	year = models.IntegerField(default=0, null=False)
 	quarter = models.IntegerField(default=0, null=False)
 	river_profile = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+
+
 
 
 

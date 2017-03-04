@@ -19,6 +19,8 @@ urlpatterns = [
 	url(r'^devices/activity/$',views.get_device_status),
 	url(r'^regression/activate/$',views.monthly_flow_constants),
 	url(r'^regression/constants/$',views.get_quarter_constants),
+	# url(r'^regression/constants/river/$',views.get_quarter_constants_device),
+	url(r'readings/daily/avgdischarge/$',views.get_avg_discharge),
 	url(r'^$',views.index),
 ]
 

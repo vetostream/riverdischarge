@@ -61,7 +61,7 @@ nav .nav-wrapper {
   }
 }
 
-#data-analysis, #reports-page, #regression-page{
+#data-analysis, #reports-page, #regression-page, #river-discharge-machine-page{
   display: none;
 }
 
@@ -101,7 +101,7 @@ a.button-collapse {
   color: #ee6e73;
 }
 
-.error-tag {
+.error-tag, .error-tag-river, .error-tag-river-cons {
   color: #ee6e73;
   display: none;
 }

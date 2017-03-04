@@ -535,7 +535,7 @@ $( document ).on('click',' #dashboard-btn ', function(){
 $( document ).on('click',' #data-analysis-btn ',function(){
 	console.log("devices active");
 	reveal("#data-analysis");
-	$( '.page-title' ).text("Daily Readings");
+	$( '.page-title' ).text("Daily River Stages");
 });
 
 $( document ).on('click',' #reports-btn ',function(){
@@ -550,7 +550,7 @@ $( document ).on('click',' #regression-btn ',function(){
 
 $( document ).on('click',' #river-discharge-machine ',function(){
 	reveal("#river-discharge-machine-page");
-	$( '.page-title' ).text("River Discharge");
+	$( '.page-title' ).text("Averaged Daily Measurements");
 });
 
 $('.datepicker').pickadate({

@@ -1,7 +1,8 @@
 from channels import Group
 from channels.sessions import channel_session
 from channels.auth import channel_session_user, channel_session_user_from_http
-from riverdash.models import Device, DeviceReading
+from riverdash.models import Device, DeviceReading, AverageDailyDischarge
+from django.db.models import Avg
 from datetime import datetime
 from decimal import Decimal
 import json
@@ -75,6 +76,7 @@ def reading_connect(message):
 @channel_session
 def reading_message(message):
 	reading_obj = json.loads(message.content['text'])
+	print reading_obj
 
 	push_mode = reading_obj['pm']
 	sms = reading_obj['sms']
@@ -87,23 +89,51 @@ def reading_message(message):
 	if int(push_mode) in [1,3]:
 		try:
 			devread_id = sms_data_list[0]
+			dday = sms_data_list[2]
+			dmonth = sms_data_list[1]
+			dyear = sms_data_list[8]
 			devread_time = "{0}/{1}/{2} {3}:{4}".format(sms_data_list[1],sms_data_list[2],sms_data_list[8],sms_data_list[3],sms_data_list[4])
 			devread_time_obj = datetime.strptime(devread_time,'%m/%d/%Y %H:%M')
+			if devread_time_obj.month in [1,2,3]:
+				quarter = 1
+			elif devread_time_obj.month in [4,5,6]:
+				quarter = 2
+			elif devread_time_obj.month in [7,8,9]:
+				quarter = 3
+			elif devread_time_obj.month in [10,11,12]:
+				quarter = 4
+			else:
+				quarter = "None"
+
 			devread_device = 'RDM1111'
-			water_level_one = sms_data_list[5]
-			water_level_two = sms_data_list[6]
+			water_level_one = Decimal(float(sms_data_list[5]) * (0.01)) #convert m to cm
+			water_level_two = Decimal(float(sms_data_list[6]) * (0.01)) #convert m to cm
 			device_batt = sms_data_list[7]
-			print sms_data_list
 			device = Device.objects.get(device_id=devread_device)
 			device.device_battery = device_batt
 			device.save()
+			print "Quarter({0})".format(quarter)
 			DeviceReading.objects.create(
-					devread_depth_sensor_one = water_level_one,
-					devread_depth_sensor_two = water_level_two,
+					devread_depth_sensor_one = "{0:,.2f}".format(water_level_one),
+					devread_depth_sensor_two = "{0:,.2f}".format(water_level_two),
 					devread_device = device,
 					devread_time = devread_time_obj,
 					devread_id = devread_id,
+					devread_quarter = quarter,
 				)
+			obj = DeviceReading.objects.filter(devread_time__day=dday,devread_time__month=dmonth,devread_time__year=dyear)
+			discharge_ave = obj.aggregate(Avg('devread_discharge'))['devread_discharge__avg']
+			stage_ave = obj.aggregate(Avg('devread_stage'))['devread_stage__avg']
+			disc_obj = AverageDailyDischarge.objects.filter(discharge_date=devread_time_obj.date())
+
+			if not disc_obj:
+				AverageDailyDischarge.objects.create(discharge=discharge_ave,stage=stage_ave,discharge_date=devread_time_obj.date())
+			else:
+				for d in disc_obj:
+					d.discharge = discharge_ave
+					d.stage = stage_ave
+					d.save()
+
 			print "Stored Device Reading"
 			Group('readings').send({
 				'text':message.content['text'],

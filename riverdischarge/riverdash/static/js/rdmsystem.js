@@ -711,3 +711,8 @@ $( document ).ready(function(){
 	$('#quarter-constants').hide();
 	$('#quarter-constants-select-river').hide();
 });
+
+
+$(window).resize(function(){
+	drawBasic();
+});

@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col s12 m12 l12 main-wrapper" id="dashboard">
 
-        <div class="col s12 m12 l5">
+<!--         <div class="col s12 m12 l5">
           <div class="card horizontal hoverable">
             <div class="card-image">
               <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/358751-200.png" style="height: 50px; padding-top: 100px;">
@@ -56,32 +56,68 @@
             <div class="card-stacked">
               <div class="card-content device-detail">
                 <div class="per-det"><p><b>Device ID</b></p><i>RDM1111</i></div>
-<!--                 <div class="per-det"><p><b>Device Latitude</b></p><i>127.01</i></div>
-                <div class="per-det"><p><b>Device Longitude</b></p><i>700.2</i></div> -->
+                <div class="per-det"><p><b>Device Latitude</b></p><i>127.01</i></div>
+                <div class="per-det"><p><b>Device Longitude</b></p><i>700.2</i></div>
                 <div class="per-det"><p><b>Device Battery</b></p><i id="device-batt">Initializing...</i></div>
                 <div class="per-det"><p><b>Device Status</b></p><i id="device-stat">Initializing...</i></div>
               </div>
             </div>
           </div>
+        </div> -->
+        <div class="col s12 m12 l6">
+          <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header active"><i class="material-icons">perm_device_information</i>Device Info</div>
+              <div class="collapsible-body"><span class="device-detail">
+                <div class="per-det"><p><b>Device ID</b></p><i>RDM1111</i></div>
+                <div class="per-det"><p><b>Device Battery</b></p><i id="device-batt">Initializing...</i></div>
+                <div class="per-det"><p><b>Device Status</b></p><i id="device-stat">Initializing...</i></div>                
+              </span></div>
+            </li>
+
+          </ul>
         </div>
 
-        <div class="col s12 m12 l7">
+        <div class="col s12 m12 l6">
+          <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header active"><i class="material-icons">subject</i>Today's Readings</div>
+              <div class="collapsible-body"><div class="device-reading device-reading-block"></div></div>
+            </li>
+
+          </ul>
+        </div>        
+
+<!--         <div class="col s12 m12 l7">
           <div class="card horizontal hoverable">
             <div class="card-stacked">
               <div class="card-content device-reading device-reading-block">
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="col s12 m12 l12">
+          <ul class="collapsible" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header active"><i class="material-icons">insert_chart</i>Today's River Stage Chart</div>
+              <div class="collapsible-body">
+                <div class="card-content reading-graph" id="dashboard-plot">
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>         
+
+<!--         <div class="col s12 m12 l12">
           <div class="card horizontal hoverable">
             <div class="card-stacked">
               <div class="card-content reading-graph" id="dashboard-plot">
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 

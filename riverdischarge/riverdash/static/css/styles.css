@@ -14,7 +14,7 @@
 }
 
 .per-det {
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }
 
 .per-det i {
@@ -22,7 +22,7 @@
 }
 
 .device-reading {
-  height: 290px !important;
+  height: 218px !important;
   overflow-y: scroll;
 }
 
@@ -104,5 +104,9 @@ a.button-collapse {
 .error-tag, .error-tag-river, .error-tag-river-cons {
   color: #ee6e73;
   display: none;
+}
+
+#dashboard-plot {
+  width: 100%;
 }
 

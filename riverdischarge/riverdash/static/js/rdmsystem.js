@@ -420,6 +420,7 @@ function get_quarter_constants($quarter,$year){
 		dataType:'json',
 	}).done(function(response){
 		$('.error-tag').hide();
+		$("#quarter-table-data").empty();
 		if(response.data_points.length === 0){
 			$("#quarter-constants").hide("slow");
 			$("#quarter-wrapper").show("slow");

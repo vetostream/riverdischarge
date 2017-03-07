@@ -72,7 +72,7 @@ def reading_list(request, format=None):
         	else:
         		dt = datetime.strptime(dt,'%d %B, %Y').date()
 
-        readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)
+        readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year).order_by('-devread_time')
         serializer = ReadingSerializer(readings, many=True)
         return Response(serializer.data)
 

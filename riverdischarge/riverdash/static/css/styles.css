@@ -111,3 +111,31 @@ a.button-collapse {
   width: 100%;
 }
 
+#login{
+  width: 500px;
+  position: absolute;
+  padding-top: 5%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#login-body {
+  background-image: url("../img/bglogin.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.page-footer {
+  width: 100%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #0F3B5F !important;
+  text-align: center;
+  color: #fff;
+  opacity: 0.5;
+}

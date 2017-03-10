@@ -21,6 +21,7 @@ urlpatterns = [
 	url(r'^regression/constants/$',views.get_quarter_constants),
 	# url(r'^regression/constants/river/$',views.get_quarter_constants_device),
 	url(r'readings/daily/avgdischarge/$',views.get_avg_discharge),
+	url(r'testreport/$',views.test_view),
 	url(r'^$',views.index),
 ]
 

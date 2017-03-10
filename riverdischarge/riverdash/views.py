@@ -455,13 +455,13 @@ def render_to_pdf(template_src,context_dict):
 
 	pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
 	if not pdf.err:
-		return HttpResponse(result.getValue(), content_type='application/pdf')
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
 
 	return HttpResponse("We had some errors")
 
 
 def test_view(request):
-	return render_to_pdf('mytemplate.html',{'pagesize':'A4','mylist':'test',})
+	return render_to_pdf('rdmsystem/streamflow.html',{'pagesize':'A4','title':'Streamflow Measurement',})
 
 
 

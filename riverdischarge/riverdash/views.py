@@ -159,12 +159,12 @@ def readings_wpagination(request):
 		else:
 			dt = datetime.strptime(dt,'%d %B, %Y').date()
 
-		pages = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year).count()
+		pages = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year).count()
 
 		if page == 1:
-			readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)[0:10]
+			readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year)[0:10]
 		else:
-			readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)[page*10:page*10+10]
+			readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year)[page*10:page*10+10]
 		
 		data = serializers.serialize('json', readings)
 

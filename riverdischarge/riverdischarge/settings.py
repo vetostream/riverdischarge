@@ -86,7 +86,7 @@ ROOT_URLCONF = 'riverdischarge.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,6 +98,8 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_DIRS = (os.path.join(SETTINGS_PATH,'templates'))
 
 
 WSGI_APPLICATION = 'riverdischarge.wsgi.application'

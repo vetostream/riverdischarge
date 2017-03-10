@@ -23,6 +23,8 @@ import os
 import cStringIO as StringIO
 from xhtml2pdf import pisa
 from cgi import escape
+from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
 
 
 @api_view(['GET','POST'])
@@ -107,7 +109,7 @@ def index(request, template_dir='rdmsystem/index.html'):
 	if not request.user.is_authenticated:
 		return redirect('/login')
 	else:
-		return render(request, template_dir)
+		return render(request, template_dir,{'username':request.user,'email':request.user.email})
 
 def login_user(request, template_dir='rdmsystem/login.html'):
 	return render(request, template_dir)
@@ -470,7 +472,27 @@ def daily_stage_report(request):
 			dt = datetime.strptime(dt,'%d %B, %Y').date()
 
 	readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year).order_by('-devread_time')
-	return render_to_pdf('rdmsystem/streamflow.html',{'pagesize':'A4','title':'Streamflow Measurement','readings':readings,'date':dt})
+	return render_to_pdf('rdmsystem/dailystage.html',{'pagesize':'A4','title':'Daily River Stage','readings':readings,'date':dt})
+
+def logout_user(request):
+	logout(request)
+	return render(request, 'rdmsystem/login.html')
+
+@csrf_exempt
+def check_user(request):
+	username = request.POST.get('username', False)
+	password = request.POST.get('password', False)
+	user = authenticate(username=username,password=password)
+
+	if user is not None:
+		return HttpResponse("1")
+	else:
+		return HttpResponse("0")
+
+
+
+	
+
 
 
 

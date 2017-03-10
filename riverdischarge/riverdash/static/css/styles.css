@@ -139,3 +139,22 @@ a.button-collapse {
   color: #fff;
   opacity: 0.5;
 }
+
+
+#login-btn {
+  display: none;
+}
+
+#error-login, #success-login{
+  display: none;
+}
+
+#error-login {
+  color: #ef5350;
+  font-size: 20px;
+}
+
+#success-login {
+  color: #81c784;
+  font-size: 20px;
+}

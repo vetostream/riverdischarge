@@ -25,7 +25,7 @@
               </div>
               <div class="card-content">
                 <div class="row">
-                  <form class="col s12" method="POST" action="/login/now/">{% csrf_token %}
+                  <form style="padding-top: 25px;" class="col s12" method="POST" action="/login/now/">{% csrf_token %}
                     <div class="row">
                       <div class="input-field col s12">
                         <input placeholder="" id="username" type="text" class="validate" name="username">
@@ -40,7 +40,16 @@
                       </div>
                     </div>
 
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Sign In
+                    <div class="row">
+                      <div class="col s12">
+                        <p class="flow-text" id="error-login"><i class="material-icons">error</i>The credentials you entered is invalid!</p> 
+                      </div>
+                      <div class="col s12">
+                        <p class="flow-text" id="success-login"><i class="material-icons">done</i>The credentials you entered is valid!</p>
+                      </div>                      
+                    </div>
+
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="login-btn">Log In
                       <i class="material-icons right">send</i>
                     </button>
 
@@ -59,6 +68,50 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript"></script>  
+    <script type="text/javascript">
+
+      $( document ).ready(function(){
+        console.log('Document is ready...');
+      });
+
+      var $username = "";
+      var $password = "";
+
+
+      $( document ).on('change','input[name="password"]',function(){
+        $username = $("input[name='username']").val();
+      });
+
+      $( document ).on('change','input[name="password"]',function(){
+        $password = $("input[name='password']").val();
+
+        $.ajax({
+          url:'/checkuser/',
+          data:{'username':$username,'password':$password},
+          type:'POST',
+          dataType:'text',
+        }).done(function(response){
+          if(response == '1'){
+            $("#success-login").show();
+            $("#error-login").hide();
+            $("#login-btn").show();
+          }else{
+            $username = $("input[name='username']").val("");
+            $password = $("input[name='password']").val("");            
+            $("#error-login").show();
+            $("#success-login").hide();
+            $("#login-btn").hide();
+          }
+        }).fail(function(xhr, status, errThrown){
+          console.log("Something went wrong.");
+          console.log("Error: " + errThrown);
+          console.log("Status: " + status);
+          console.log(xhr);
+        }).always(function(xhr, status){
+          console.log("The request is complete!");
+        });
+
+      });
+    </script>  
     </body>
   </html>

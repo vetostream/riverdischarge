@@ -31,14 +31,21 @@
         <ul id="slide-out" class="side-nav fixed">
           <li>
             <div class="userView">
-              <h5>River Discharge Monitoring System</h5>
+              <div class="background">
+                <img src="{% static '/img/river.jpg' %}">
+              </div>
+              <a href="#"><img class="circle" src="{% static '/img/avatar.jpg' %}"></a>
+              <a href="#"><span class="white-text name">{{ username }}</span></a>
+              <a href="#"><span class="white-text email">{{ email }}</span></a>
             </div>
           </li>
-          <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!">Dashboard</a></li>
-          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!">Daily River Stages</a></li>
-          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!">Streamflow Measurements</a></li>
+          <li><a href="/logout"><i class="material-icons">power_settings_new</i>Log Out</a></li>
+          <li><div class="divider" style="background-color:rgba(55,80,136,1); !important;"></div></li>          
+          <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
+          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!"><i class="material-icons">av_timer</i>Daily River Stages</a></li>
+          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!"><i class="material-icons">insert_chart</i>Streamflow Measurements</a></li>
 <!--           <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li> -->
-          <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!">Averaged Daily Measurements</a></li>
+          <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!"><i class="material-icons">trending_up</i>Averaged Daily Measurements</a></li>
         </ul>    
     </header>
 

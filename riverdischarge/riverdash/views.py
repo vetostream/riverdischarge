@@ -460,8 +460,17 @@ def render_to_pdf(template_src,context_dict):
 	return HttpResponse("We had some errors")
 
 
-def test_view(request):
-	return render_to_pdf('rdmsystem/streamflow.html',{'pagesize':'A4','title':'Streamflow Measurement',})
+def daily_stage_report(request):
+	if request.method == 'GET':
+		dt = request.GET.get('dt','')
+
+		if dt == '':
+			dt = timezone.now()
+		else:
+			dt = datetime.strptime(dt,'%d %B, %Y').date()
+
+	readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year).order_by('-devread_time')
+	return render_to_pdf('rdmsystem/streamflow.html',{'pagesize':'A4','title':'Streamflow Measurement','readings':readings,'date':dt})
 
 
 

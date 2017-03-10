@@ -4,7 +4,23 @@
         <title>{{ title }}</title>
         <style type="text/css">
             table {
-                border: 1px solid #000;
+            color: #333; /* Lighten up font color */
+            font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+            width: 640px;
+            border-collapse:
+            collapse; border-spacing: 0;
+            }
+
+            td, th { border: 1px solid #CCC; height: 30px; padding-top: 3px;} /* Make cells a bit taller */
+
+            th {
+            background: #F3F3F3; /* Light grey background */
+            font-weight: bold; /* Make sure they're bold */
+            }
+
+            td {
+            background: #FAFAFA; /* Lighter grey background */
+            text-align: center; /* Center our text */
             }
             @page {
                 size: {{ pagesize }};
@@ -20,12 +36,25 @@
         </style>
     </head>
     <body>
+        <div class="header">
+            <h1>Daily River Stage Readings as of <i>{{ date }}</i></h1>
+        </div>
         <div class="table-data">
             <table>
-                <thead>
+                <tr>
                     <th>Sensor Alpha Water Level</th>
                     <th>Sensor Beta Water Level</th>
-                </thead>
+                    <th>Reading Date</th>
+                    <th>Received Date</th>
+                </tr>
+                {% for r in readings %}
+                <tr>
+                    <td>{{ r.devread_depth_sensor_one }}</td>
+                    <td>{{ r.devread_depth_sensor_two }}</td>
+                    <td>{{ r.devread_time }}</td>
+                    <td>{{ r.devread_received }}</td>
+                </tr>
+                {% endfor %}
             </table>        
         </div>
         <div id="footerContent">

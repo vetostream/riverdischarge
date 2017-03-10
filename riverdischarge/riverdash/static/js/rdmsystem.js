@@ -570,10 +570,30 @@ $( document ).on('change', '.datepicker',function(){
 	var $dateVal = $( ".picker__input" ).val();
 	var $page = 1;
 	console.log($dateVal);
+	$("#print-daily-stage").attr('href','/daily/stage/report?dt='+$dateVal);
 	reading_obj.getQuerySetSpecDate($dateVal,$page,'paginate');
 	google.charts.load('current', {packages: ['corechart', 'line']});
 	google.charts.setOnLoadCallback(drawWaterReading($dateVal));
 });
+
+// $( document ).on('click', '#print-daily-stage', function(){
+// 	var $dateVal = $( ".picker__input" ).val();
+// 	$.ajax({
+// 		url:'/daily/stage/report',
+// 		data: {'dt':$dateVal},
+// 		type:'GET',
+// 		dataType:'json',
+// 	}).done(function(response){
+// 		console.log(response);
+// 	}).fail(function(xhr, status, errThrown){
+// 		console.log("Something went wrong.");
+// 		console.log("Error: " + errThrown);
+// 		console.log("Status: " + status);
+// 		console.log(xhr);
+// 	}).always(function(xhr, status){
+// 		console.log("The request is complete!");
+// 	});
+// });
 
 $( document ).on('click','#go-chart',function(){
 	var $dateVal = $( ".picker__input" ).val();

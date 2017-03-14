@@ -7,121 +7,22 @@
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="{% static '/css/styles.css' %}" rel="stylesheet">
 
       <!--Let browser know website is optimized for mobile-->
-<!--       <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style type="text/css">
-
-      html {
-        height: 100%;
-      }
-      
-      body {
-        background-image: url("../static/img/bglogin.jpg");
-        background-repeat: no-repeat;
-      }
-
-      nav {
-        background-color: transparent;
-        -webkit-box-shadow: none !important;
-        -moz-box-shadow: none !important;
-        box-shadow: none !important;
-        padding: 0px 100px 100px 100px;
-      }
-
-      @media only screen and (max-width : 992px) {
-        .nav-wrapper {
-          width: 100%;
-          text-align: center;
-        }
-
-        header, main{
-          padding-left: 0px !important;
-        }
-      }
-
-      @media screen and (max-width: 460px){
-        #login-title, .flow-text{
-          font-size: 17px !important;
-      /*    padding-right: 10px !important;*/
-        }
-
-      }  
-
-      @media screen and (min-width: 460px){
-       body {
-          background-size: 100%;
-        }        
-      }   
-
-      .container {
-        margin-top: -50px;
-      }
-
-      .welcome-section{
-        color: #fff;
-      }
-
-      #login {
-        opacity: 0.8;
-      }     
-
-      .page-footer {
-        width: 100%;
-        position: fixed;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        background: #0F3B5F !important;
-        text-align: center;
-        padding: 0.01rem;
-        color: #fff;
-        opacity: 0.5;
-      }
-
-      footer p {
-        margin-top: -5px;
-      }
-
-      #login-btn {
-        display: none;
-      }
-
-      #error-login, #success-login{
-        display: none;
-      }
-
-      #error-login {
-        color: #ef5350;
-        font-size: 20px;
-      }
-
-      #success-login {
-        color: #81c784;
-        font-size: 20px;
-      }           
-
-    </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    <body>   
-      <nav>
-        <div class="nav-wrapper">
-<!--           <a href="#" class="brand-logo">River Discharge Monitoring System</a> -->
-        </div>
-      </nav>
-      <div class="container">
 
+    <body id="login-body">
+
+      <div class="container">
         <div class="row">
-          <div class="col s12 l3 m3">
-            
-          </div>
           <div class="col s12 l6 m6" id="login">
             <div class="card">
               <div class="card-image">
                 <img src="http://blue-engineering.nl/wp-content/uploads/2014/10/Slider-blue.png" style="height: 80px;">
-                <span class="card-title" id="login-title">River Discharge Monitoring System</span>
-              </div>            
+                <span class="card-title">River Discharge Monitoring System</span>
+              </div>
               <div class="card-content">
                 <div class="row">
                   <form style="padding-top: 25px;" class="col s12" method="POST" action="/login/now/">{% csrf_token %}
@@ -141,10 +42,10 @@
 
                     <div class="row">
                       <div class="col s12">
-                        <p class="flow-text" id="error-login">The credentials you entered is invalid!</p> 
+                        <p class="flow-text" id="error-login"><i class="material-icons">error</i>The credentials you entered is invalid!</p> 
                       </div>
                       <div class="col s12">
-                        <p class="flow-text" id="success-login">The credentials you entered is valid!</p>
+                        <p class="flow-text" id="success-login"><i class="material-icons">done</i>The credentials you entered is valid!</p>
                       </div>                      
                     </div>
 
@@ -158,23 +59,13 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m3 l3">
-            
-          </div>
+        </div>       
+      </div>  
 
-<!--           <div class="col s12 m6 l6">
-            <p class="flow-text welcome-section">
-"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."              
-            </p>            
-          </div>
-        </div> -->
-
-        </div>
-      </div>
-
-      <footer class="page-footer">
+      <div class="page-footer">
         <p>Copyright &copy; 2017 Fnsociety, All rights reserved.</p>
-      </footer>      
+      </div>                 
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
@@ -221,6 +112,6 @@
         });
 
       });
-    </script>     
+    </script>  
     </body>
   </html>

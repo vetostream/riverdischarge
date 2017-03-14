@@ -23,7 +23,7 @@
 }
 
 .device-reading {
-  height: 218px !important;
+  height: 251px !important;
   overflow-y: scroll;
 }
 
@@ -59,6 +59,13 @@ nav .nav-wrapper {
 
   header, main{
     padding-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 460px){
+  nav.top-nav a.page-title {
+    font-size: 15px !important;
+/*    padding-right: 10px !important;*/
   }
 }
 
@@ -125,7 +132,6 @@ a.button-collapse {
 #login-body {
   background-image: url("../img/bglogin.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
 }
 
 .page-footer {
@@ -133,6 +139,7 @@ a.button-collapse {
   position: absolute;
   right: 0;
   left: 0;
+  padding-top: 100px;
   bottom: 0;
   background: #0F3B5F !important;
   text-align: center;
@@ -157,4 +164,17 @@ a.button-collapse {
 #success-login {
   color: #81c784;
   font-size: 20px;
+}
+
+.bord-right {
+  border-right: 1px solid #BBB;
+}
+
+.bord-top {
+  border-top: 1px solid #BBB;
+  margin-bottom: -19px;
+}
+
+.rm-margin {
+  margin-bottom: 1px !important;
 }

@@ -73,6 +73,9 @@ class QuarterConstants(models.Model):
 	quarter = models.IntegerField(default=0, null=False)
 	river_profile = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
 
+class Setconfig(models.Model):
+	sensor_height = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+
 
 
 

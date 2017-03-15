@@ -5,6 +5,7 @@
   <head>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alef|Antic|Viga" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -21,7 +22,7 @@
       <nav class="top-nav">
         <div class="container">
           <div class="nav-wrapper">
-            <a href="#" class="page-title">Dashboard</a>
+            <a href="#" class="page-title">Dashboard</a>          
           </div>
         </div>
       </nav>
@@ -40,18 +41,37 @@
               <a href="#"><span class="white-text email">{{ email }}</span></a>
             </div>
           </li>
-          <li><a href="/logout"><i class="material-icons">power_settings_new</i>Log Out</a></li>
+          <li><a href="/logout"><i class="material-icons white-icon">power_settings_new</i>Log Out</a></li>
+          <li class="liside" id="settings-btn"><a class="waves-effect" href="#!"><i class="material-icons white-icon">settings</i>Settings</a></li>
           <li><div class="divider" style="background-color:rgba(55,80,136,1); !important;"></div></li>          
-          <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
-          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!"><i class="material-icons">av_timer</i>Daily River Stages</a></li>
-          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!"><i class="material-icons">insert_chart</i>Streamflow Measurements</a></li>
+          <li class="liside" id="dashboard-btn"><a class="waves-effect" href="#!"><i class="material-icons white-icon">dashboard</i>Dashboard</a></li>
+          <li class="liside" id="data-analysis-btn"><a class="waves-effect" href="#!"><i class="material-icons white-icon">av_timer</i>Daily River Stages</a></li>
+          <li class="liside" id="reports-btn"><a class="waves-effect" href="#!"><i class="material-icons white-icon">insert_chart</i>Streamflow Measurements</a></li>
 <!--           <li class="liside" id="regression-btn"><a class="waves-effect" href="#!">Power Regression</a></li> -->
-          <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!"><i class="material-icons">trending_up</i>Averaged Daily Measurements</a></li>
+          <li class="liside" id="river-discharge-machine"><a class="waves-effect" href="#!"><i class="material-icons white-icon">trending_up</i>Averaged Daily Measurements</a></li>
         </ul>    
     </header>
 
     <main>
     <div class="container">
+
+    <div class="row">
+      <div class="col s12 m12 l12 main-wrapper" id="settings-page">
+      <form class="col s12" id="settings-form">
+       {% csrf_token %}
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <input placeholder="Meters" id="initial-height" type="text" class="validate" name="sensor_height" required>
+            <label for="initial-height" data-error="Only numbers are allowed." data-success="Successfully changed the value.">Sensor Height</label>
+          </div>
+          <div class="input-field col s12 m6 l6 left-align">
+            <button class="btn waves-effect waves-light save-btn-settings" type="submit" name="action" id="save-settings">Save
+            </button>                  
+          </div>            
+        </div>
+      </form>        
+      </div>
+    </div>    
 
     <div class="row">
       <div class="col s12 m12 l12 main-wrapper" id="dashboard">
@@ -521,7 +541,7 @@
                 <div class="card-content">
                     <ul class="pagination center-align" id="readings-pagination">
                     </ul>                 
-                    <table class="responsive-table">
+                    <table class="">
                       <thead>
                         <tr>
                             <th data-field="id">Sensor Alpha Water Level</th>

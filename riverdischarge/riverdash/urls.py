@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'daily/stage/report/$',views.daily_stage_report),
 	url(r'logout/$',views.logout_user),
 	url(r'checkuser/$',views.check_user),
+	url(r'configure/$',views.sensor_height),
 	url(r'^$',views.index),
 ]
 

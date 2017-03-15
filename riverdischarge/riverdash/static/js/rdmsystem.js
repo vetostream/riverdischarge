@@ -553,6 +553,11 @@ $( document ).on('click',' #regression-btn ',function(){
 	$( '.page-title' ).text("Power Regression");
 });
 
+$( document ).on('click',' #settings-btn ',function(){
+	reveal("#settings-page");
+	$( '.page-title' ).text("Settings");
+});
+
 $( document ).on('click',' #river-discharge-machine ',function(){
 	reveal("#river-discharge-machine-page");
 	$( '.page-title' ).text("Averaged Daily Measurements");
@@ -690,6 +695,36 @@ $( document ).on('change','select[name="river-month"]',function(){
 	$year = $('input[name="river-year"]').val();
 
 	get_avg_measurement($month,$year);
+});
+
+
+$( document ).on('submit','#settings-form',function(e){
+	e.preventDefault();
+	$valueIn = $("#initial-height").val().trim();
+
+	if(isNaN($valueIn)){
+		$("#initial-height").addClass("invalid");
+	}else if($valueIn == ""){
+		$("#initial-height").addClass("invalid");
+	}else{
+		$.ajax({
+			url:'/configure/',
+			data: {'sensor_height':$valueIn},
+			type:'POST',
+			dataType:'json',
+		}).done(function(response){
+			console.log("response:" + response);
+			$("#initial-height").addClass("valid");
+		}).fail(function(xhr, status, errThrown){
+			console.log("Something went wrong.");
+			console.log("Error: " + errThrown);
+			console.log("Status: " + status);
+			console.log(xhr);
+			$("#initial-height").addClass("invalid");
+		}).always(function(xhr, status){
+			console.log("The request is complete!");
+		});
+	}
 });
 
 // $( document ).on('click','#print-stream',function(){

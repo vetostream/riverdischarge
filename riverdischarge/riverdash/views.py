@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants, AverageDailyDischarge
+from riverdash.models import Device, DeviceReading, MonthlyDischarge, QuarterConstants, AverageDailyDischarge, Setconfig
 from riverdash.serializers import DeviceSerializer, ReadingSerializer
 from rest_framework.permissions import IsAuthenticated
 from riverdash.riverai import RiverDischargeAI
@@ -488,6 +488,25 @@ def check_user(request):
 		return HttpResponse("1")
 	else:
 		return HttpResponse("0")
+
+@csrf_exempt
+def sensor_height(request):
+	sensor_height = request.POST.get('sensor_height', False)
+	response = JsonResponse({'data':0})
+
+	if not sensor_height:
+		response = JsonResponse({'data':0})
+	else:
+		try:
+			sense = Setconfig.objects.get(pk=1)
+			sense.sensor_height = sensor_height
+			sense.save()
+			response = JsonResponse({'data':1})
+		except:
+			response = JsonResponse({'data':0})
+
+	return response
+
 
 
 

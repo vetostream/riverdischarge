@@ -9,6 +9,14 @@
 
 }
 
+body {
+  font-family: 'Viga', sans-serif;
+}
+
+.save-btn-settings {
+  margin-bottom: -30px;
+}
+
 .side-nav a {
   color: #fff;
 }
@@ -42,6 +50,10 @@
   color: black !important;
 }
 
+i.white-icon {
+  color: #fff !important;
+}
+
 nav .nav-wrapper {
   position: relative;
   height: 100%;
@@ -69,18 +81,19 @@ nav .nav-wrapper {
   }
 }
 
-#data-analysis, #reports-page, #regression-page, #river-discharge-machine-page{
+#data-analysis, #reports-page, #regression-page, #river-discharge-machine-page, #settings-page{
   display: none;
 }
 
 .top-nav {
-  height: 122px;
+  height: 80px;
   background:#FF9900; /* fallback for old browsers */  
+  opacity: 0.75;
 }
 
-nav.top-nav a.page-title {
-    line-height: 122px;
-    font-size: 48px;
+nav.top-nav a.page-title{
+    line-height: 80px;
+    font-size: 25px;
 }
 
 header, main{
@@ -88,7 +101,7 @@ header, main{
 }
 
 a.button-collapse.full {
-    line-height: 122px;
+    line-height: 80px;
 }
 
 a.button-collapse {

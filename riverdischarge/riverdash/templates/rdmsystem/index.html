@@ -305,10 +305,7 @@
             <h5 class="error-tag">Something went wrong. Fill up the form properly.</h5>
           </div>
         </div>
-        <div class="row">
-          <div class="col s12 m12 l2">
-            <h6>Streamflow Measurements</h6>
-          </div>        
+        <div class="row">      
           <div class="col s12 m5 l5">
             <select class="browser-default" name="quarter" id="quarter-select">
               <option value="" disabled selected>Choose your option</option>
@@ -488,14 +485,14 @@
       </div>      
 
       <div class="col s12 m12 l12 main-wrapper" id="data-analysis">
-      <div class="row">
-        <div class="col s3 m3 l3 left-align">
-          <a class="btn-floating btn-large waves-effect waves-light red" id="print-daily-stage" href="#" target="_blank"><i class="material-icons">print</i></a>
-        </div>        
-        <div class="col s9 m9 l9">
+      <div class="row">      
+        <div class="col s12 m9 l9">
           <label>Date</label>
           <input type="date" class="datepicker">
-        </div>      
+        </div>
+        <div class="col s12 m3 l3 right-align">
+          <a class="waves-effect waves-light btn" id="print-daily-stage" href="#" target="_blank"><i class="material-icons right">print</i>Print</a>
+        </div>  
       </div>
 
         <div class="preloader-wrapper big active" id="loader">

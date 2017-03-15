@@ -79,6 +79,10 @@ nav .nav-wrapper {
     font-size: 15px !important;
 /*    padding-right: 10px !important;*/
   }
+
+  #print-daily-stage {
+    margin-bottom: 0px;
+  }
 }
 
 #data-analysis, #reports-page, #regression-page, #river-discharge-machine-page, #settings-page{
@@ -190,4 +194,8 @@ a.button-collapse {
 
 .rm-margin {
   margin-bottom: 1px !important;
+}
+
+#print-daily-stage {
+  margin-bottom: -75px;
 }

@@ -25,6 +25,7 @@ SECRET_KEY = ')&y&p%!9$1s!9w7t=s!7wc2b3r%z%jew-$zhzwge)0ud_&!c##'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -43,23 +44,23 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
 ]
 
-CHANNEL_LAYERS = {
-    "default":{
-        "BACKEND": "asgiref.inmemory.ChannelLayer",
-        "ROUTING": "riverdischarge.routing.channel_routing",
-    },
-}
-
-
 # CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "asgi_redis.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
+#     "default":{
+#         "BACKEND": "asgiref.inmemory.ChannelLayer",
 #         "ROUTING": "riverdischarge.routing.channel_routing",
 #     },
 # }
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+        "ROUTING": "riverdischarge.routing.channel_routing",
+    },
+}
 
 # CHANNEL_LAYERS = {
 #     "default": {

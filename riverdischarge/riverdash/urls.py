@@ -25,6 +25,7 @@ urlpatterns = [
 	url(r'logout/$',views.logout_user),
 	url(r'checkuser/$',views.check_user),
 	url(r'configure/$',views.sensor_height),
+	url(r'senseh/$',views.get_sensor_height),
 	url(r'^$',views.index),
 ]
 

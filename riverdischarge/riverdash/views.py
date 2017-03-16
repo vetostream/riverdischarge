@@ -507,6 +507,11 @@ def sensor_height(request):
 
 	return response
 
+def get_sensor_height(request):
+	sense = Setconfig.objects.get(pk=1)
+
+	return JsonResponse({'sense':sense.sensor_height})
+
 
 
 

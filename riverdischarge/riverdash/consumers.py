@@ -1,7 +1,7 @@
 from channels import Group
 from channels.sessions import channel_session
 from channels.auth import channel_session_user, channel_session_user_from_http
-from riverdash.models import Device, DeviceReading, AverageDailyDischarge
+from riverdash.models import Device, DeviceReading, AverageDailyDischarge, Setconfig
 from django.db.models import Avg
 from datetime import datetime
 from decimal import Decimal
@@ -84,7 +84,7 @@ def reading_message(message):
 	sms_data_list = []
 	sms_data_list = sms.split(',')
 
-	#validation {'sms':'id,mo,dy,hr,mn,rd1,rd2,battlevel,yr','pm':'1'}
+	#validation {"sms":"id,mo,dy,hr,mn,rd1,rd2,battlevel,yr","pm":"1"}
 
 	if int(push_mode) in [1,3]:
 		try:
@@ -105,14 +105,17 @@ def reading_message(message):
 			else:
 				quarter = "None"
 
+			sense = Setconfig.objects.get(pk=1)
+			sensor_height = sense.sensor_height
+
 			devread_device = 'RDM1111'
-			water_level_one = Decimal(float(sms_data_list[5]) * (0.01)) #convert m to cm
-			water_level_two = Decimal(float(sms_data_list[6]) * (0.01)) #convert m to cm
+			water_level_one = Decimal(float(sensor_height) - (float(sms_data_list[5]) * (0.01))) #convert cm to m
+			water_level_two = Decimal(float(sensor_height) - (float(sms_data_list[6]) * (0.01))) #convert cm to m
 			device_batt = sms_data_list[7]
 			device = Device.objects.get(device_id=devread_device)
 			device.device_battery = device_batt
 			device.save()
-			print "Quarter({0})".format(quarter)
+			print "Quarter({0}) Water_one({1}), Water_two({2})".format(quarter,water_level_one,water_level_two)
 			DeviceReading.objects.create(
 					devread_depth_sensor_one = "{0:,.2f}".format(water_level_one),
 					devread_depth_sensor_two = "{0:,.2f}".format(water_level_two),

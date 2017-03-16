@@ -594,6 +594,27 @@
     // socket = new WebSocket('ws://' + window.location.host + '/chreading/RDM1111/942939d0244ec04702c2008d994487c81e97e9f56584450ca94c0145ac860064515f118e4749497dcbb534f356d341c778622763d364087e3407a1737735bad6/');
     socket = new WebSocket('ws://' + window.location.host + '/chreading/RDM4321/!n!t/');
     var device = "RDM4321";
+    var senseh = 0;
+
+    $( document ).ready(function(){
+      $.ajax({
+        url:'/senseh',
+        data:{},
+        type:'GET',
+        dataType:'json',
+      }).done(function(response){
+        console.log("Stored sensor_height.");
+        senseh = response.sense;
+      }).fail(function(xhr, status, errThrown){
+        console.log("Something went wrong.");
+        console.log("Error: " + errThrown);
+        console.log("Status: " + status);
+        console.log(xhr);
+      }).always(function(xhr, status){
+        console.log("The request is complete!");
+      }); 
+    });
+
 
 
     socket.onmessage = function(e){
@@ -617,7 +638,9 @@
             var d = new Date(data_sms[8]+"-"+data_sms[1]+"-"+data_sms[2]+" "+data_sms[3]+":"+data_sms[4]);
             var devread_received = new Date();
             var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
-            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+data_sms[5]+' <br> Sensor Beta WL: '+data_sms[6]+'<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received_stringify+'</p></blockquote>');
+            var read_one = (parseFloat(senseh) - (parseFloat(data_sms[5]) * 0.01)).toFixed(3);
+            var read_two = (parseFloat(senseh) - (parseFloat(data_sms[6]) * 0.01)).toFixed(3);
+            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+read_one+' m<br> Sensor Beta WL: '+read_two+' m<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received_stringify+'</p></blockquote>');
             $("#device-batt").html(parseFloat(data_sms[7])+"%");
           }else if(reading_obj.pm == '2'){
               // console.log(reading_obj.dd);

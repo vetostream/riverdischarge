@@ -91,8 +91,8 @@ var Reading = {
 				var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
 
 				console.log("devread_time: " + devread_time_stringify + ", devread_received: "+devread_received_stringify);
-				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' <br> Sensor Beta WL: '+value.devread_depth_sensor_two+'\
-					<br>Read Time: '+devread_time_stringify+'<br>Received: '+devread_received_stringify+'</p></blockquote>');
+				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' m<br> Sensor Beta WL: '+value.devread_depth_sensor_two+'\
+					 m<br>Read Time: '+devread_time_stringify+'<br>Received: '+devread_received_stringify+'</p></blockquote>');
 			});
 		}).fail(function(xhr, status, errThrown){
 			console.log("Something went wrong.");
@@ -766,6 +766,22 @@ $( document ).ready(function(){
 	$('#quarter-wrapper').hide();
 	$('#quarter-constants').hide();
 	$('#quarter-constants-select-river').hide();
+
+	$.ajax({
+		url:'/senseh',
+		data:{},
+		type:'GET',
+		dataType:'json',
+	}).done(function(response){
+		$("#initial-height").val(response.sense);
+	}).fail(function(xhr, status, errThrown){
+		console.log("Something went wrong.");
+		console.log("Error: " + errThrown);
+		console.log("Status: " + status);
+		console.log(xhr);
+	}).always(function(xhr, status){
+		console.log("The request is complete!");
+	});	
 });
 
 

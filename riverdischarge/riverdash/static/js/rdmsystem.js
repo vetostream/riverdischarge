@@ -93,7 +93,7 @@ var Reading = {
 
 				console.log("devread_time: " + devread_time_stringify + ", devread_received: "+devread_received_stringify);
 				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' m<br> Sensor Beta WL: '+value.devread_depth_sensor_two+'\
-					 m<br>Read Time: '+devread_time_stringify+'<br>Received: '+devread_received_stringify+'</p></blockquote>');
+					 m<br>Read Time: '+devread_time+'<br>Received: '+devread_received+'</p></blockquote>');
 			});
 		}).fail(function(xhr, status, errThrown){
 			console.log("Something went wrong.");

@@ -26,7 +26,7 @@ class DeviceReading(models.Model):
 	devread_depth_sensor_one = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 	devread_depth_sensor_two = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 	devread_time = models.DateTimeField('datetime of reading.',null=True)
-	devread_received = models.DateTimeField(auto_now_add=True)
+	devread_received = models.DateTimeField('datetime of receiving',null=True)
 	devread_discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 	devread_stage = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 	devread_quarter = models.IntegerField(default=0, null=False)

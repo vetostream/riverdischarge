@@ -20,11 +20,14 @@ from django.db.models import Q
 import json
 import pdfkit
 import os
+import pytz
 import cStringIO as StringIO
 from xhtml2pdf import pisa
 from cgi import escape
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_exempt
+
+tz = pytz.timezone('Asia/Taipei')
 
 
 @api_view(['GET','POST'])
@@ -69,11 +72,12 @@ def device_detail(request, pk, format=None):
 def reading_list(request, format=None):
     if request.method == 'GET':
         if not request.query_params:
-            dt = timezone.now()
+            # dt = timezone.now()
+            dt = datetime.now(tz)
         else:
         	dt = request.query_params['dt']
         	if dt == '':
-        		dt = timezone.now()
+        		dt = datetime.now(tz)
         	else:
         		dt = datetime.strptime(dt,'%d %B, %Y').date()
 
@@ -93,7 +97,8 @@ def reading_list(request, format=None):
 def get_reading_for_chart(request, format=None):
 	if request.method == 'GET':
 		if not request.query_params:
-			dt = timezone.now()
+			# dt = timezone.now()
+			dt = datetime.now(tz)
 			print "Time for today"
 			readings = DeviceReading.objects.filter(devread_received__day=dt.day,devread_received__month=dt.month,devread_received__year=dt.year)
 		else:
@@ -157,7 +162,8 @@ def readings_wpagination(request):
 		page = int(request.GET.get('page',''))
 
 		if dt == '':
-			dt = timezone.now()
+			# dt = timezone.now()
+			dt = datetime.now(tz)
 		else:
 			dt = datetime.strptime(dt,'%d %B, %Y').date()
 
@@ -220,13 +226,13 @@ def machine_learning(request):
 		quarter = request.GET.get('quarter')
 
 	if quarter == '1':
-		readings = DeviceReading.objects.filter(Q(devread_received__month=1) | Q(devread_received__month=2) | Q(devread_received__month=3) ,devread_received__year=timezone.now().year)
+		readings = DeviceReading.objects.filter(Q(devread_received__month=1) | Q(devread_received__month=2) | Q(devread_received__month=3) ,devread_received__year=datetime.now(tz).year)
 	elif quarter == '2':
-		readings = DeviceReading.objects.filter(Q(devread_received__month=4) | Q(devread_received__month=5) | Q(devread_received__month=6) ,devread_received__year=timezone.now().year)
+		readings = DeviceReading.objects.filter(Q(devread_received__month=4) | Q(devread_received__month=5) | Q(devread_received__month=6) ,devread_received__year=datetime.now(tz).year)
 	elif quarter == '3':
-		readings = DeviceReading.objects.filter(Q(devread_received__month=7) | Q(devread_received__month=8) | Q(devread_received__month=9) ,devread_received__year=timezone.now().year)
+		readings = DeviceReading.objects.filter(Q(devread_received__month=7) | Q(devread_received__month=8) | Q(devread_received__month=9) ,devread_received__year=datetime.now(tz).year)
 	elif quarter == '4':
-		readings = DeviceReading.objects.filter(Q(devread_received__month=10) | Q(devread_received__month=11) | Q(devread_received__month=12) ,devread_received__year=timezone.now().year)
+		readings = DeviceReading.objects.filter(Q(devread_received__month=10) | Q(devread_received__month=11) | Q(devread_received__month=12) ,devread_received__year=datetime.now(tz).year)
 	else:
 		readings = None
 
@@ -467,7 +473,8 @@ def daily_stage_report(request):
 		dt = request.GET.get('dt','')
 
 		if dt == '':
-			dt = timezone.now()
+			# dt = timezone.now()
+			dt = datetime.now(tz)
 		else:
 			dt = datetime.strptime(dt,'%d %B, %Y').date()
 

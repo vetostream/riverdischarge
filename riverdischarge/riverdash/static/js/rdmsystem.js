@@ -299,11 +299,15 @@ function drawBasic() {
 
       var options = {
         hAxis: {
-          title: 'Time'
+          title: 'Time',
         },
         vAxis: {
-          title: 'Water Level'
+          title: 'Water Level',
+          minValue: 0,
+          maxValue: 10,
         },
+        legend: 'none',
+        curveType: 'function',
       };
 
       var chart = new google.visualization.LineChart(document.getElementById('dashboard-plot'));

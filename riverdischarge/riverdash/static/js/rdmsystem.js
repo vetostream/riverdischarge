@@ -85,6 +85,7 @@ var Reading = {
 			dataType:'json',
 		}).done(function(response){
 			$.each(response, function(key, value){
+				console.log("devread_time: " + value.devread_time);
 				var devread_time = new Date(value.devread_time);
 				var devread_received = new Date(value.devread_received);
 				var devread_time_stringify = devread_time.getFullYear() + "-" + devread_time.getMonth() + "-" + devread_time.getDate() + "  T" + devread_time.getHours() + ":" + devread_time.getMinutes();

@@ -23,12 +23,12 @@ class Device(models.Model):
 
 class DeviceReading(models.Model):
 	devread_id = models.CharField(max_length=25)
-	devread_depth_sensor_one = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-	devread_depth_sensor_two = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+	devread_depth_sensor_one = models.DecimalField(max_digits=12, decimal_places=6, default=0)
+	devread_depth_sensor_two = models.DecimalField(max_digits=12, decimal_places=6, default=0)
 	devread_time = models.DateTimeField('datetime of reading.',null=True)
 	devread_received = models.DateTimeField('datetime of receiving',null=True)
-	devread_discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-	devread_stage = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+	devread_discharge = models.DecimalField(max_digits=12, decimal_places=6, default=0)
+	devread_stage = models.DecimalField(max_digits=12, decimal_places=6, default=0)
 	devread_quarter = models.IntegerField(default=0, null=False)
 	devread_device = models.ForeignKey(Device, to_field='device_id', on_delete=models.CASCADE)
 
@@ -39,8 +39,8 @@ class DeviceReading(models.Model):
 		return self.devread_id
 
 class MonthlyDischarge(models.Model):
-	discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
-	stage = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	discharge = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
+	stage = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
 	month = models.IntegerField(default=0, null=False)
 	part = models.IntegerField(default=0, null=False)
 	quarter = models.IntegerField(default=0, null=False)
@@ -53,8 +53,8 @@ class MonthlyDischarge(models.Model):
 		return self.id
 
 class AverageDailyDischarge(models.Model):
-	discharge = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
-	stage = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	discharge = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
+	stage = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
 	discharge_date = models.DateField('date for averaged discharge.')
 
 	def __unicode__(self):
@@ -65,16 +65,16 @@ class AverageDailyDischarge(models.Model):
 
 
 class QuarterConstants(models.Model):
-	a = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
-	b = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
-	r = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
-	rtwo = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	a = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
+	b = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
+	r = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
+	rtwo = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
 	year = models.IntegerField(default=0, null=False)
 	quarter = models.IntegerField(default=0, null=False)
-	river_profile = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	river_profile = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
 
 class Setconfig(models.Model):
-	sensor_height = models.DecimalField(max_digits=12, decimal_places=2, default=0, null=False)
+	sensor_height = models.DecimalField(max_digits=12, decimal_places=6, default=0, null=False)
 
 
 

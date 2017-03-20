@@ -125,10 +125,10 @@ def reading_message(message):
 				device = Device.objects.get(device_id=devread_device)
 				device.device_battery = device_batt
 				device.save()
-				print "Quarter({0}) Water_one({1}), Water_two({2})".format(quarter,water_level_one,water_level_two)
+				print "Quarters({0}) Water_one({1}), Water_two({2})".format(quarter,water_level_one,water_level_two)
 				DeviceReading.objects.create(
-						devread_depth_sensor_one = "{0:,.2f}".format(water_level_one),
-						devread_depth_sensor_two = "{0:,.2f}".format(water_level_two),
+						devread_depth_sensor_one = "{0:.6f}".format(water_level_one),
+						devread_depth_sensor_two = "{0:.6f}".format(water_level_two),
 						devread_device = device,
 						devread_time = devread_time_obj,
 						devread_received = r,

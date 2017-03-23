@@ -305,7 +305,7 @@ function drawBasic() {
         vAxis: {
           title: 'Water Level',
           minValue: 0,
-          maxValue: 10,
+          maxValue: 3.5,
         },
         legend: 'none',
         curveType: 'function',

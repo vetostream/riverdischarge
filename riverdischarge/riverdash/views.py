@@ -16,7 +16,7 @@ from django.http import JsonResponse
 from django.core import serializers
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Max, Avg, Min
 import json
 import pdfkit
 import os
@@ -480,6 +480,21 @@ def daily_stage_report(request):
 
 	readings = DeviceReading.objects.filter(devread_time__day=dt.day,devread_time__month=dt.month,devread_time__year=dt.year).order_by('-devread_time')
 	return render_to_pdf('rdmsystem/dailystage.html',{'pagesize':'A4','title':'Daily River Stage','readings':readings,'date':dt})
+
+def average_readings_report(request):
+	month_list = ['January','February','March','April','May','June','July','August','September','October','November','December']
+	if request.method == 'GET':
+		month = request.GET.get('month','')
+		year = request.GET.get('year','')
+
+		if (month == '') | (year == ''):
+			# dt = timezone.now()
+			month = datetime.now(tz).month
+			year = datetime.now(tz).year
+
+	readings = AverageDailyDischarge.objects.filter(discharge_date__month=month,discharge_date__year=year).order_by('-discharge_date')
+	max_q = AverageDailyDischarge.objects.filter(discharge_date__month=month,discharge_date__year=year).aggregate(Max('discharge'),Min('discharge'),Avg('discharge'),Max('stage'),Min('stage'),Avg('stage'))
+	return render_to_pdf('rdmsystem/averageread.html',{'pagesize':'A4','title':'Daily Average Reading','readings':readings,'month':month_list[month-1],'year':year,'max_q':max_q})
 
 def logout_user(request):
 	logout(request)

@@ -22,6 +22,15 @@
             background: #FAFAFA; /* Lighter grey background */
             text-align: center; /* Center our text */
             }
+
+
+            .discharge {
+                text-align: left;
+            }
+
+            .stage {
+                text-align: right;
+            }
             @page {
                 size: {{ pagesize }};
                 margin: 1cm;
@@ -37,24 +46,35 @@
     </head>
     <body>
         <div class="header">
-            <h1>Daily River Stage Readings as of <i>{{ date }}</i></h1>
+            <h1 style="text-align: center;">Daily Average Reading for <i>{{ month }} {{ year }}</i></h1>
+
+            <div class="stacked">
+                <div class="discharge">
+                    <h4>Max River Discharge: <u>{{ max_q.discharge__max}} m<sup>3</sup>/s</u></h4>
+                    <h4>Average River Discharge: <u>{{ max_q.discharge__avg}} m<sup>3</sup>/s</u></h4>
+                    <h4>Min River Discharge: <u>{{ max_q.discharge__min}} m<sup>3</sup>/s</u></h4>
+                </div>
+
+<!--                 <div class="stage">
+                    <h4>Max River Stage: <u>{{ max_q.stage__max }} m</u></h4>
+                    <h4>Average River Stage: <u>{{ max_q.stage__avg }} m</u></h4>
+                    <h4>Min River Stage: <u>{{ max_q.stage__min }} m</u></h4>
+                </div>  -->               
+            </div>
+
         </div>
         <div class="table-data">
             <table>
                 <tr>
-                    <th>Digital Read</th>
-                    <th>Analog Read</th>
-                    <th>River Stage</th>
-                    <th>Reading Date</th>
-                    <th>Received Date</th>
+                    <th>Day</th>
+                    <th>River Dishcarge(Q)</th>
+                    <th>River Stage(h)</th>
                 </tr>
                 {% for r in readings %}
                 <tr>
-                    <td>{{ r.devread_depth_sensor_one }} m</td>
-                    <td>{{ r.devread_depth_sensor_two }} m</td>
-                    <td>{{ r.devread_stage }} m</td>
-                    <td>{{ r.devread_time }}</td>
-                    <td>{{ r.devread_received }}</td>
+                    <td>{{ r.discharge_date.day }}</td>
+                    <td>{{ r.discharge }} m<sup>3</sup>/s</td>
+                    <td>{{ r.stage }} m</td>
                 </tr>
                 {% endfor %}
             </table>        

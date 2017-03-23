@@ -92,7 +92,7 @@ var Reading = {
 				var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
 
 				console.log("devread_time: " + devread_time_stringify + ", devread_received: "+devread_received_stringify);
-				$( ".device-reading-block" ).append('<blockquote><p>Sensor Alpha WL: '+value.devread_depth_sensor_one+' m<br> Sensor Beta WL: '+value.devread_depth_sensor_two+'\
+				$( ".device-reading-block" ).append('<blockquote><p>Digital Read: '+value.devread_depth_sensor_one+' m<br> Analog Read: '+value.devread_depth_sensor_two+'\
 					 m<br>Read Time: '+value.devread_time+'<br>Received: '+value.devread_received+'</p></blockquote>');
 			});
 		}).fail(function(xhr, status, errThrown){
@@ -152,7 +152,7 @@ var Reading = {
 			$.each(response, function(key, value){
 				json_data = JSON.parse(value);
 				$.each(json_data, function(key,value){
-					$( "#data-reading-body" ).append('<tr><td>'+value.fields.devread_depth_sensor_one+'</td><td>'+value.fields.devread_depth_sensor_two+'</td><td>'+value.fields.devread_received+'</td></tr>').hide().fadeIn('fast');
+					$( "#data-reading-body" ).append('<tr><td>'+value.fields.devread_depth_sensor_one+' m</td><td>'+value.fields.devread_depth_sensor_two+' m</td><td>'+value.fields.devread_stage+' m</td><td>'+value.fields.devread_time+'</td><td>'+value.fields.devread_received+'</td></tr>').hide().fadeIn('fast');
 				});
 			});
 
@@ -286,13 +286,14 @@ function drawBasic() {
 			t_date = date_of_data.getHours();
 			m_date = date_of_data.getMinutes();
 			console.log(t_date + " " + m_date);
-			array_data_points.push([date_of_data,parseFloat(value.devread_depth_sensor_one)]);
+			array_data_points.push([date_of_data,parseFloat(value.devread_depth_sensor_one),parseFloat(value.devread_depth_sensor_two)]);
 		});
 
 	  console.log(array_data_points);
       var data = new google.visualization.DataTable();
       data.addColumn({type:'date', id:'Time'});
-      data.addColumn({type:'number', id:'Water Level'});
+      data.addColumn({type:'number', id:'Digital Read',label:'Digital Read'});
+      data.addColumn({type:'number', id:'Analog Read',label:'Analog Read'});
       // data.addColumn(type:'float', 'X');
       // data.addColumn('number', 'RDM1111');
 
@@ -304,10 +305,7 @@ function drawBasic() {
         },
         vAxis: {
           title: 'Water Level',
-          minValue: 0,
-          maxValue: 3.5,
         },
-        legend: 'none',
         curveType: 'function',
       };
 

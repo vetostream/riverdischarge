@@ -541,8 +541,10 @@
                     <table class="">
                       <thead>
                         <tr>
-                            <th data-field="id">Sensor Alpha Water Level</th>
-                            <th data-field="name">Sensor Beta Water Level</th>
+                            <th data-field="id">Digital Read</th>
+                            <th data-field="name">Analog Read</th>
+                            <th>River Stage</th>
+                            <th>Date Read</th>
                             <th data-field="price">Date Received</th>
                         </tr>
                       </thead>
@@ -640,7 +642,7 @@
             var devread_received_stringify = devread_received.getFullYear() + "-" + devread_received.getMonth() + "-" + devread_received.getDate() + "  T" + devread_received.getHours() + ":" + devread_received.getMinutes();
             var read_one = (parseFloat(senseh) - (parseFloat(data_sms[5]) * 0.01)).toFixed(3);
             var read_two = (parseFloat(senseh) - (parseFloat(data_sms[6]) * 0.01)).toFixed(3);
-            $(' .device-reading-block ').prepend('<blockquote><p>Sensor Alpha WL: '+read_one+' m<br> Sensor Beta WL: '+read_two+' m<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received
+            $(' .device-reading-block ').prepend('<blockquote><p>Digital Read: '+read_one+' m<br> Analog Read: '+read_two+' m<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received
               +'</p></blockquote>');
             $("#device-batt").html(parseFloat(data_sms[7])+"%");
           }else if(reading_obj.pm == '2'){

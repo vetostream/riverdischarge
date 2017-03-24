@@ -436,16 +436,16 @@ function get_quarter_constants($quarter,$year){
 			$.each(response.data_points,function(key,value){
 				if($quarter == 1){
 					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'January':(key <= 3 ? 'February':(key <=5 ? 'March':'')))+'</td>\
-						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+						<td>'+value[0]+' m<sup>3</sup>/s</td><td>'+value[1]+' m</td></tr>');
 				}else if($quarter == 2){
 					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'April':(key <= 3 ? 'May':(key <=5 ? 'June':'')))+'</td>\
-						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+						<td>'+value[0]+' m<sup>3</sup>/s</td><td>'+value[1]+' m</td></tr>');
 				}else if($quarter == 3){
 					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'July':(key <= 3 ? 'August':(key <=5 ? 'September':'')))+'</td>\
-						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');				
+						<td>'+value[0]+' m<sup>3</sup>/s</td><td>'+value[1]+' m</td></tr>');				
 				}else{
 					$("#quarter-table-data").append('<tr><td>'+((key <= 1) ? 'October':(key <= 3 ? 'November':(key <=5 ? 'December':'')))+'</td>\
-						<td>'+value[0]+'</td><td>'+value[1]+'</td></tr>');
+						<td>'+value[0]+' m<sup>3</sup>/s</td><td>'+value[1]+' m</td></tr>');
 				}
 			});
 
@@ -509,6 +509,7 @@ function get_avg_measurement($month,$year){
 			$('.error-tag-river').hide();
 			$('.error-tag-river-cons').hide();
 			$('#quarter-constants-select-river').show("slow");
+			$("#print-average-river").attr('href','/daily/average/report?month='+$month+'&year='+$year);
 		}
 
 		$.each(response,function(key,value){
@@ -516,7 +517,7 @@ function get_avg_measurement($month,$year){
 			$("#quarter-table-data-river").empty();
 			$.each(json_data,function(key,value){
 				$day = new Date(value.fields.discharge_date);
-				$("#quarter-table-data-river").append("<tr><td>"+$day.getDate()+"</td><td>"+value.fields.discharge+"</td><td>"+value.fields.stage+"</td></tr>");
+				$("#quarter-table-data-river").append("<tr><td>"+$day.getDate()+"</td><td>"+value.fields.discharge+" m<sup>3</sup>/s</td><td>"+value.fields.stage+" m</td></tr>");
 			});
 		});
 

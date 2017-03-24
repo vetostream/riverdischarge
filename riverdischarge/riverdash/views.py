@@ -484,8 +484,8 @@ def daily_stage_report(request):
 def average_readings_report(request):
 	month_list = ['January','February','March','April','May','June','July','August','September','October','November','December']
 	if request.method == 'GET':
-		month = request.GET.get('month','')
-		year = request.GET.get('year','')
+		month = int(request.GET.get('month',''))
+		year = int(request.GET.get('year',''))
 
 		if (month == '') | (year == ''):
 			# dt = timezone.now()

@@ -645,7 +645,7 @@
             var read_two = (parseFloat(senseh) - (parseFloat(data_sms[6]) * 0.01)).toFixed(3);
             $(' .device-reading-block ').prepend('<blockquote><p>Digital Read: '+read_one+' m<br> Analog Read: '+read_two+' m<br>Read Time: '+devread_time_stringify+'<br>Received:'+devread_received
               +'</p></blockquote>');
-            $("#device-batt").html(parseFloat(data_sms[7])+"%");
+            $("#device-batt").html(parseInt(parseFloat(data_sms[7])/parseFloat(130) * 100)+"%");
           }else if(reading_obj.pm == '2'){
               // console.log(reading_obj.dd);
               // $( 'tr[data-id="'+reading_obj.devread_device+'"]' ).find("#device-batt").html("<b>"+reading_obj.device_battery+"</b>");

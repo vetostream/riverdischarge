@@ -121,7 +121,7 @@ def reading_message(message):
 				devread_device = 'RDM1111'
 				water_level_one = Decimal(Decimal(sensor_height) - (Decimal(sms_data_list[5]) * Decimal(0.01))) #convert cm to m
 				water_level_two = Decimal(Decimal(sensor_height) - (Decimal(sms_data_list[6]) * Decimal(0.01))) #convert cm to m
-				device_batt = sms_data_list[7]
+				device_batt = float(sms_data_list[7])/float(130) * 100
 				device = Device.objects.get(device_id=devread_device)
 				device.device_battery = device_batt
 				device.save()
@@ -170,10 +170,10 @@ def reading_disconnect(message):
 
 	#update device status
 	try:
-		device = Device.objects.get(device_id=device)
-		device.device_status = 0
-		device.device_battery = 0
-		device.save()
+		# device = Device.objects.get(device_id=device)
+		# device.device_status = 0
+		# device.device_battery = 0
+		# device.save()
 		print "Device status updated after disconnection."
 	except:
 		print "Unable to update device status after device disconnection."

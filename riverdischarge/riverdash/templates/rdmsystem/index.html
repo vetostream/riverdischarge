@@ -662,8 +662,8 @@
           console.log(reading_obj);
           if(reading_obj == 'RDM1111'){
             console.log("The device was Disconnected.");
-            $("#device-batt").html('---');
-            $("#device-stat").html("<b class='online-device'>OFFLINE</b>");
+            //$("#device-batt").html('---');
+            $("#device-stat").html("<b class='offline-device'>OFFLINE</b>");
           }else if(reading_obj == 'RDM1111c'){
               $("#device-stat").html("<b class='online-device'>ONLINE</b>");
           }

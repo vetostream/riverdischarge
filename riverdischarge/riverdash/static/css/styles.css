@@ -39,6 +39,10 @@ body {
   color: green;
 }
 
+.offline-device {
+  color: red;
+}
+
 .header-wrap {
   padding-top: 21px;
 }

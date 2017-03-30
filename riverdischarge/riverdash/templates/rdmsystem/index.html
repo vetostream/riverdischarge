@@ -666,7 +666,7 @@
           }else if(reading_obj == 'RDM1111c'){
 		$.ajax({
 			url:'/devices/activity',
-			data:{'device_id':$device_id},
+			data:{'device_id':'RDM1111'},
 			type:'GET',
 			dataType:'json',
 		}).done(function(response){

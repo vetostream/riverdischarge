@@ -295,8 +295,7 @@
             </ul>                     
           </div>         
         </div>
-      </div>    
-
+      </div>
 
 
       <div class="col s12 m12 l12 main-wrapper" id="reports-page">
@@ -662,9 +661,26 @@
           console.log(reading_obj);
           if(reading_obj == 'RDM1111'){
             console.log("The device was Disconnected.");
-            //$("#device-batt").html('---');
+            $("#device-batt").html('Waiting for device');
             $("#device-stat").html("<b class='offline-device'>OFFLINE</b>");
           }else if(reading_obj == 'RDM1111c'){
+		$.ajax({
+			url:'/devices/activity',
+			data:{'device_id':$device_id},
+			type:'GET',
+			dataType:'json',
+		}).done(function(response){
+			console.log(response);
+      $("#device-batt").html(response.device_batt);
+            //$("#device-stat").html("<b class='online-device'>"+response.device_status.toUpperCase()+"</b>");
+		}).fail(function(xhr, status, errThrown){
+			console.log("Something went wrong. Cant give device detail.");
+			console.log("Error: " + errThrown);
+			console.log("Status: " + status);
+			console.log(xhr);
+		}).always(function(xhr, status){
+			console.log("The request is complete!");
+		});                          
               $("#device-stat").html("<b class='online-device'>ONLINE</b>");
           }
         }
